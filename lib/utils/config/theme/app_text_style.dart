@@ -91,13 +91,19 @@ class AppTextStyle {
     fontWeight: FontWeight.normal,
   );
 
+  static const largeWhiteBold = TextStyle(
+    fontSize: AppFontSize.large,
+    color: AppColors.whiteColor,
+    fontWeight: FontWeight.bold,
+  );
+
   static const xlargeWhite = TextStyle(
     fontSize: AppFontSize.xLarge,
     color: AppColors.whiteColor,
     fontWeight: FontWeight.normal,
   );
 
-  static const xlargeWhitekBold = TextStyle(
+  static const xlargeWhiteBold = TextStyle(
     fontSize: AppFontSize.xLarge,
     color: AppColors.whiteColor,
     fontWeight: FontWeight.bold,
