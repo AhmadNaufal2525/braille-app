@@ -89,58 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         child: FloatingActionButton(
           onPressed: () {
-            showModalBottomSheet(
-              backgroundColor: AppColors.whiteColor,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-              ),
-              context: context,
-              isScrollControlled: true,
-              builder: (context) {
-                return FractionallySizedBox(
-                  heightFactor: 0.3,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 16),
-                      Container(
-                        width: 40,
-                        height: 4,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[400],
-                          borderRadius: BorderRadius.circular(2),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      const Text(
-                        'Pilih Jenis Pemindaian',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      ListTile(
-                        leading: const Icon(
-                          Icons.picture_as_pdf,
-                          color: Colors.red,
-                        ),
-                        title: const Text('Scan Dokumen (PDF)'),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      ListTile(
-                        leading: const Icon(Icons.image, color: Colors.blue),
-                        title: const Text('Scan Gambar'),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
+            Navigator.pushNamed(context, '/text-scanner');
           },
 
           backgroundColor: AppColors.whiteColor,

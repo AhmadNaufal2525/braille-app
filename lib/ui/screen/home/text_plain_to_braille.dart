@@ -77,7 +77,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
           },
           height: 48,
           width: 350,
-          textStyle: AppTextStyle.xlargeWhitekBold,
+          textStyle: AppTextStyle.xlargeWhiteBold,
         ),
         const SizedBox(height: 16),
         Label(text: 'Braille Text'),
