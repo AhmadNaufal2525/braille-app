@@ -37,6 +37,7 @@ class _TextScannerState extends State<TextScanner> with WidgetsBindingObserver {
     super.dispose();
   }
 
+  @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (cameraController == null || !cameraController!.value.isInitialized) {
       return;
