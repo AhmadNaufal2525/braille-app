@@ -1,3 +1,4 @@
+import 'package:braille_app/ui/screen/home/converter.dart';
 import 'package:braille_app/ui/screen/home/widget/dashed_textform_field.dart';
 import 'package:braille_app/ui/shared/basic_button.dart';
 import 'package:braille_app/ui/shared/label.dart';
@@ -17,46 +18,6 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
   final TextEditingController plainTextController = TextEditingController();
   final TextEditingController brailleTextController = TextEditingController();
 
-  final Map<String, String> brailleMap = {
-    'a': '⠁',
-    'b': '⠃',
-    'c': '⠉',
-    'd': '⠙',
-    'e': '⠑',
-    'f': '⠋',
-    'g': '⠛',
-    'h': '⠓',
-    'i': '⠊',
-    'j': '⠚',
-    'k': '⠅',
-    'l': '⠇',
-    'm': '⠍',
-    'n': '⠝',
-    'o': '⠕',
-    'p': '⠏',
-    'q': '⠟',
-    'r': '⠗',
-    's': '⠎',
-    't': '⠞',
-    'u': '⠥',
-    'v': '⠧',
-    'w': '⠺',
-    'x': '⠭',
-    'y': '⠽',
-    'z': '⠵',
-    ' ': ' ',
-  };
-
-  String convertToBraille(String input) {
-    return input
-        .toLowerCase()
-        .split('')
-        .map((char) {
-          return brailleMap[char] ?? '?';
-        })
-        .join('');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -72,7 +33,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
           text: 'Translate',
           onPress: () {
             final input = plainTextController.text;
-            final output = convertToBraille(input);
+            final output = latinToBraille(input);
             brailleTextController.text = output;
           },
           height: 48,

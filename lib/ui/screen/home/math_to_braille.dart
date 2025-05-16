@@ -1,3 +1,4 @@
+import 'package:braille_app/ui/screen/home/converter.dart';
 import 'package:braille_app/ui/screen/home/widget/dashed_textform_field.dart';
 import 'package:braille_app/ui/shared/basic_button.dart';
 import 'package:braille_app/ui/shared/label.dart';
@@ -17,34 +18,6 @@ class _MathToBrailleState extends State<MathToBraille> {
   final TextEditingController mathTextController = TextEditingController();
   final TextEditingController brailleTextController = TextEditingController();
 
-  final Map<String, String> mathBrailleMap = {
-    '0': '⠴',
-    '1': '⠂',
-    '2': '⠆',
-    '3': '⠒',
-    '4': '⠲',
-    '5': '⠢',
-    '6': '⠖',
-    '7': '⠶',
-    '8': '⠦',
-    '9': '⠔',
-    '+': '⠖',
-    '-': '⠤',
-    '*': '⠡',
-    '/': '⠌',
-    '=': '⠶',
-    '(': '⠷',
-    ')': '⠾',
-    ' ': ' ',
-  };
-
-  String convertToBraille(String input) {
-    return input
-        .split('')
-        .map((char) => mathBrailleMap[char] ?? '?') // unknown chars → ?
-        .join('');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -60,7 +33,7 @@ class _MathToBrailleState extends State<MathToBraille> {
           text: 'Convert',
           onPress: () {
             final input = mathTextController.text;
-            final output = convertToBraille(input);
+            final output = latinToBraille(input);
             brailleTextController.text = output;
           },
           height: 48,
