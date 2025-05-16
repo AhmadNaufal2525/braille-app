@@ -12,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isPlainToBraille = true;
+  String scannedTextFromScanner = '';
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           isPlainToBraille
                               ? Colors.white
                               : AppColors.primaryColor,
-                      minimumSize: Size(150, 50),
+                      minimumSize: const Size(150, 50),
                       backgroundColor:
                           isPlainToBraille
                               ? AppColors.primaryColor
@@ -58,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           !isPlainToBraille
                               ? Colors.white
                               : AppColors.primaryColor,
-                      minimumSize: Size(150, 50),
+                      minimumSize: const Size(150, 50),
                       backgroundColor:
                           !isPlainToBraille
                               ? AppColors.primaryColor
@@ -72,9 +73,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               const SizedBox(height: 20),
-              // Display the corresponding widget
+              // Pass scanned text to TextPlainToBraille
               isPlainToBraille
-                  ? const TextPlainToBraille()
+                  ? TextPlainToBraille(
+                    initialScannedText: scannedTextFromScanner,
+                  )
                   : const MathToBraille(),
             ],
           ),
@@ -88,10 +91,14 @@ class _HomeScreenState extends State<HomeScreen> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/text-scanner');
+          onPressed: () async {
+            final result = await Navigator.pushNamed(context, '/text-scanner');
+            if (result != null && result is String) {
+              setState(() {
+                scannedTextFromScanner = result;
+              });
+            }
           },
-
           backgroundColor: AppColors.whiteColor,
           elevation: 0,
           child: Icon(

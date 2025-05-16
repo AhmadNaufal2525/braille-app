@@ -98,7 +98,7 @@ class _TextScannerState extends State<TextScanner> with WidgetsBindingObserver {
 
   void startScanningLoop() {
     _scanTimer?.cancel();
-    _scanTimer = Timer.periodic(const Duration(seconds: 1), (_) async {
+    _scanTimer = Timer.periodic(const Duration(seconds: 3), (_) async {
       if (_isScanning ||
           cameraController == null ||
           !cameraController!.value.isInitialized)
@@ -142,15 +142,14 @@ class _TextScannerState extends State<TextScanner> with WidgetsBindingObserver {
       final inputImage = InputImage.fromFile(file);
       final recognizedText = await textRecognizer.processImage(inputImage);
 
-      await navigator.push(
-        MaterialPageRoute(
-          builder:
-              (BuildContext context) => ResultScreen(text: recognizedText.text),
-        ),
-      );
-    } catch (e) {
+      // Return scanned text to previous screen
+      navigator.pop(recognizedText.text);
+    } catch (e, stackTrace) {
+      print('Error scanning text: $e');
+      print('Stack trace: $stackTrace');
+
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('An error occurred when scanning text')),
+        SnackBar(content: Text("An error occurred when scanning text: $e")),
       );
     }
   }

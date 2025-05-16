@@ -8,15 +8,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TextPlainToBraille extends StatefulWidget {
-  const TextPlainToBraille({super.key});
+  final String initialScannedText;
+  const TextPlainToBraille({super.key, this.initialScannedText = ''});
 
   @override
   State<TextPlainToBraille> createState() => _TextPlainToBrailleState();
 }
 
 class _TextPlainToBrailleState extends State<TextPlainToBraille> {
-  final TextEditingController plainTextController = TextEditingController();
+  late TextEditingController plainTextController;
   final TextEditingController brailleTextController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    plainTextController = TextEditingController(
+      text: widget.initialScannedText,
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant TextPlainToBraille oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialScannedText != widget.initialScannedText) {
+      plainTextController.text = widget.initialScannedText;
+    }
+  }
+
+  @override
+  void dispose() {
+    plainTextController.dispose();
+    brailleTextController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +67,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
         const SizedBox(height: 16),
         Label(text: 'Braille Text'),
         DashedTextFormField(hintText: '', controller: brailleTextController),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -72,7 +96,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
                     );
                   },
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 BasicButton(
                   text: 'Reset',
                   backgroundColor: AppColors.whiteColor,
