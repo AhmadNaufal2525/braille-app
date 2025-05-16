@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:io';
+import 'dart:math' as math;
 import 'package:braille_app/ui/screen/scanner/result_screen.dart';
 import 'package:braille_app/ui/shared/basic_button.dart';
 import 'package:braille_app/utils/config/theme/app_text_style.dart';
@@ -15,23 +17,29 @@ class TextScanner extends StatefulWidget {
 }
 
 class _TextScannerState extends State<TextScanner> with WidgetsBindingObserver {
-  bool isPermissionGranted = false;
-  late final Future<void> future;
-
-  //camera
   CameraController? cameraController;
   final textRecognizer = TextRecognizer();
+  bool isPermissionGranted = false;
+  late Future<void> future;
+  RecognizedText? _recognizedText;
+  bool _isScanning = false;
+  Timer? _scanTimer;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    future = requestCameraPermission();
+    future = requestCameraPermission().then((_) {
+      if (isPermissionGranted) {
+        initCamera();
+      }
+    });
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _scanTimer?.cancel();
     stopCamera();
     textRecognizer.close();
     super.dispose();
@@ -39,16 +47,111 @@ class _TextScannerState extends State<TextScanner> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (cameraController == null || !cameraController!.value.isInitialized) {
+    if (cameraController == null || !cameraController!.value.isInitialized)
       return;
-    }
 
     if (state == AppLifecycleState.inactive) {
       stopCamera();
-    } else if (state == AppLifecycleState.resumed &&
-        cameraController != null &&
-        cameraController!.value.isInitialized) {
+    } else if (state == AppLifecycleState.resumed) {
       startCamera();
+    }
+  }
+
+  Future<void> requestCameraPermission() async {
+    final status = await Permission.camera.request();
+    isPermissionGranted = status == PermissionStatus.granted;
+    setState(() {});
+  }
+
+  Future<void> initCamera() async {
+    final cameras = await availableCameras();
+    final backCamera = cameras.firstWhere(
+      (c) => c.lensDirection == CameraLensDirection.back,
+    );
+
+    cameraController = CameraController(
+      backCamera,
+      ResolutionPreset.medium,
+      enableAudio: false,
+    );
+
+    await cameraController!.initialize();
+    await cameraController!.setFlashMode(FlashMode.off);
+
+    if (mounted) {
+      setState(() {});
+      startScanningLoop();
+    }
+  }
+
+  void startCamera() {
+    if (cameraController != null) {
+      cameraController!.resumePreview();
+      startScanningLoop();
+    }
+  }
+
+  void stopCamera() {
+    _scanTimer?.cancel();
+    cameraController?.dispose();
+  }
+
+  void startScanningLoop() {
+    _scanTimer?.cancel();
+    _scanTimer = Timer.periodic(const Duration(seconds: 1), (_) async {
+      if (_isScanning ||
+          cameraController == null ||
+          !cameraController!.value.isInitialized)
+        return;
+
+      _isScanning = true;
+
+      try {
+        final file = await cameraController!.takePicture();
+        final inputImage = InputImage.fromFile(File(file.path));
+        final recognizedText = await textRecognizer.processImage(inputImage);
+
+        final List<TextElement> newElements = [];
+        for (final block in recognizedText.blocks) {
+          for (final line in block.lines) {
+            newElements.addAll(line.elements);
+          }
+        }
+
+        if (mounted) {
+          setState(() {
+            _recognizedText = recognizedText;
+          });
+        }
+      } catch (_) {
+        // Optional: log error
+      } finally {
+        _isScanning = false;
+      }
+    });
+  }
+
+  Future<void> scanImage() async {
+    if (cameraController == null) return;
+
+    final navigator = Navigator.of(context);
+
+    try {
+      final pictureFile = await cameraController!.takePicture();
+      final file = File(pictureFile.path);
+      final inputImage = InputImage.fromFile(file);
+      final recognizedText = await textRecognizer.processImage(inputImage);
+
+      await navigator.push(
+        MaterialPageRoute(
+          builder:
+              (BuildContext context) => ResultScreen(text: recognizedText.text),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('An error occurred when scanning text')),
+      );
     }
   }
 
@@ -59,18 +162,38 @@ class _TextScannerState extends State<TextScanner> with WidgetsBindingObserver {
       builder: (context, snapshot) {
         return Stack(
           children: [
-            if (isPermissionGranted)
-              FutureBuilder<List<CameraDescription>>(
-                future: availableCameras(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    initCameraController(snapshot.data!);
+            if (isPermissionGranted &&
+                cameraController != null &&
+                cameraController!.value.isInitialized)
+              Stack(
+                children: [
+                  SizedBox.expand(
+                    child: FittedBox(
+                      fit: BoxFit.cover,
+                      child: SizedBox(
+                        width:
+                            cameraController!
+                                .value
+                                .previewSize!
+                                .height, // Note: width/height swapped for portrait
+                        height: cameraController!.value.previewSize!.width,
+                        child: CameraPreview(cameraController!),
+                      ),
+                    ),
+                  ),
 
-                    return Center(child: CameraPreview(cameraController!));
-                  } else {
-                    return const LinearProgressIndicator();
-                  }
-                },
+                  Positioned.fill(
+                    child: CustomPaint(
+                      painter:
+                          _recognizedText == null
+                              ? null
+                              : TextDetectorPainter(
+                                recognizedText: _recognizedText!,
+                                imageSize: cameraController!.value.previewSize!,
+                              ),
+                    ),
+                  ),
+                ],
               ),
             Scaffold(
               backgroundColor: isPermissionGranted ? Colors.transparent : null,
@@ -95,13 +218,10 @@ class _TextScannerState extends State<TextScanner> with WidgetsBindingObserver {
                           ),
                         ],
                       )
-                      : Center(
-                        child: Container(
-                          padding: const EdgeInsets.only(
-                            left: 24.0,
-                            right: 24.0,
-                          ),
-                          child: const Text(
+                      : const Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24.0),
+                          child: Text(
                             'Camera permission denied',
                             textAlign: TextAlign.center,
                           ),
@@ -113,83 +233,96 @@ class _TextScannerState extends State<TextScanner> with WidgetsBindingObserver {
       },
     );
   }
+}
 
-  Future<void> requestCameraPermission() async {
-    final status = await Permission.camera.request();
-    isPermissionGranted = status == PermissionStatus.granted;
-  }
+class TextDetectorPainter extends CustomPainter {
+  final RecognizedText recognizedText;
+  final Size imageSize;
 
-  void initCameraController(List<CameraDescription> cameras) {
-    if (cameraController != null) {
-      return;
-    }
+  TextDetectorPainter({required this.recognizedText, required this.imageSize});
 
-    // Select the first rear camera.
-    CameraDescription? camera;
-    for (var i = 0; i < cameras.length; i++) {
-      final CameraDescription current = cameras[i];
-      if (current.lensDirection == CameraLensDirection.back) {
-        camera = current;
-        break;
-      }
-    }
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint =
+        Paint()
+          ..color = Colors.yellow.withOpacity(0.3)
+          ..style = PaintingStyle.fill;
 
-    if (camera != null) {
-      cameraSelected(camera);
-    }
-  }
+    final borderPaint =
+        Paint()
+          ..color = Colors.yellow
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 2;
 
-  Future<void> cameraSelected(CameraDescription camera) async {
-    cameraController = CameraController(
-      camera,
-      ResolutionPreset.max,
-      enableAudio: false,
-    );
+    for (final block in recognizedText.blocks) {
+      final rect = scaleRectCover(block.boundingBox, imageSize, size);
 
-    await cameraController!.initialize();
-    await cameraController!.setFlashMode(FlashMode.off);
+      canvas.drawRect(rect, paint);
+      canvas.drawRect(rect, borderPaint);
 
-    if (!mounted) {
-      return;
-    }
-    setState(() {});
-  }
-
-  Future<void> scanImage() async {
-    if (cameraController == null) return;
-
-    final navigator = Navigator.of(context);
-
-    try {
-      final pictureFile = await cameraController!.takePicture();
-
-      final file = File(pictureFile.path);
-
-      final inputImage = InputImage.fromFile(file);
-      final recognizedText = await textRecognizer.processImage(inputImage);
-
-      await navigator.push(
-        MaterialPageRoute(
-          builder:
-              (BuildContext context) => ResultScreen(text: recognizedText.text),
+      final textPainter = TextPainter(
+        text: TextSpan(
+          text: block.text,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('An error occurred when scanning text')),
-      );
+        textDirection: TextDirection.ltr,
+      )..layout(maxWidth: rect.width);
+
+      // Paint text with a slight vertical offset
+      textPainter.paint(canvas, Offset(rect.left, rect.top + 2));
     }
   }
 
-  void startCamera() {
-    if (cameraController != null) {
-      cameraSelected(cameraController!.description);
-    }
-  }
+  @override
+  bool shouldRepaint(covariant TextDetectorPainter oldDelegate) =>
+      oldDelegate.recognizedText != recognizedText;
+}
 
-  void stopCamera() {
-    if (cameraController != null) {
-      cameraController?.dispose();
-    }
-  }
+// Rect _scaleRect(Rect rect, Size imageSize, Size widgetSize) {
+//   // Calculate scale (uniform, to fit inside widget)
+//   final scale = math.min(
+//     widgetSize.width / imageSize.width,
+//     widgetSize.height / imageSize.height,
+//   );
+
+//   // Calculate leftover space (black bars) to center the camera preview inside widget
+//   final dx = (widgetSize.width - imageSize.width * scale) / 2;
+//   final dy = (widgetSize.height - imageSize.height * scale) / 2;
+
+//   return Rect.fromLTRB(
+//     rect.left * scale + dx,
+//     rect.top * scale + dy,
+//     rect.right * scale + dx,
+//     rect.bottom * scale + dy,
+//   );
+// }
+Rect scaleRectCover(Rect rect, Size imageSize, Size widgetSize) {
+  final scale = math.max(
+    widgetSize.width / imageSize.height, // widget width / raw height
+    widgetSize.height / imageSize.width, // widget height / raw width
+  );
+
+  final scaledImageWidth = imageSize.height * scale;
+  final scaledImageHeight = imageSize.width * scale;
+
+  final dx = (scaledImageWidth - widgetSize.width) / 2;
+  final dy = (scaledImageHeight - widgetSize.height) / 2;
+
+  // Swap x,y for raw to widget (because of rotation)
+  final left = rect.left * scale - dx; // raw x → widget x (horizontal)
+  final top = rect.top * scale - dy; // raw y → widget y (vertical)
+  final right = rect.right * scale - dx;
+  final bottom = rect.bottom * scale - dy;
+
+  // Clamp to screen bounds
+  return Rect.fromLTRB(
+    left.clamp(0.0, widgetSize.width),
+    top.clamp(0.0, widgetSize.height),
+    right.clamp(0.0, widgetSize.width),
+    bottom.clamp(0.0, widgetSize.height),
+  );
 }
