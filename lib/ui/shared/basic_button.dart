@@ -1,3 +1,4 @@
+import 'package:braille_app/utils/config/theme/app_colors.dart';
 import 'package:braille_app/utils/config/theme/app_text_style.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ class BasicButton extends StatelessWidget {
   final Color? backgroundColor;
   final Color? foregroundColor;
   final BorderSide? border;
+  final BorderRadius? radius;
   final TextStyle? textStyle;
 
   const BasicButton({
@@ -21,6 +23,7 @@ class BasicButton extends StatelessWidget {
     this.foregroundColor,
     this.border,
     this.textStyle,
+    this.radius,
   });
 
   @override
@@ -29,9 +32,12 @@ class BasicButton extends StatelessWidget {
       onPressed: onPress,
       style: ElevatedButton.styleFrom(
         minimumSize: Size(width ?? 160, height ?? 32),
-        backgroundColor: backgroundColor,
+        backgroundColor: backgroundColor ?? AppColors.primaryColor,
         foregroundColor: foregroundColor,
-        side: border,
+        shape: RoundedRectangleBorder(
+          side: border ?? BorderSide.none,
+          borderRadius: radius ?? BorderRadius.circular(10),
+        ),
       ),
       child: Text(text, style: textStyle ?? AppTextStyle.smallWhite),
     );
