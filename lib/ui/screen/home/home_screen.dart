@@ -1,5 +1,6 @@
 import 'package:braille_app/ui/screen/home/math_to_braille.dart';
 import 'package:braille_app/ui/screen/home/text_plain_to_braille.dart';
+import 'package:braille_app/ui/shared/label.dart';
 import 'package:braille_app/utils/config/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -17,57 +18,81 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      backgroundColor: AppColors.bgColor,
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 30),
+              isPlainToBraille
+                  ? Label(text: 'Plain Text')
+                  : Label(text: 'Math Text'),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        isPlainToBraille = true;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor:
-                          isPlainToBraille
-                              ? Colors.white
-                              : AppColors.primaryColor,
-                      minimumSize: const Size(150, 50),
-                      backgroundColor:
-                          isPlainToBraille
-                              ? AppColors.primaryColor
-                              : Colors.white,
-                    ),
-                    child: const Text(
-                      'Plain to Braille',
-                      style: TextStyle(fontSize: 16),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isPlainToBraille = true;
+                        });
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        decoration: BoxDecoration(
+                          color:
+                              isPlainToBraille
+                                  ? AppColors.primaryColor
+                                  : Colors.transparent,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Text to Braille',
+                            style: TextStyle(
+                              color:
+                                  isPlainToBraille
+                                      ? Colors.white
+                                      : AppColors.primaryColor,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        isPlainToBraille = false;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor:
-                          !isPlainToBraille
-                              ? Colors.white
-                              : AppColors.primaryColor,
-                      minimumSize: const Size(150, 50),
-                      backgroundColor:
-                          !isPlainToBraille
-                              ? AppColors.primaryColor
-                              : Colors.white,
-                    ),
-                    child: const Text(
-                      'Math to Braille',
-                      style: TextStyle(fontSize: 16),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isPlainToBraille = false;
+                        });
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        decoration: BoxDecoration(
+                          color:
+                              !isPlainToBraille
+                                  ? AppColors.primaryColor
+                                  : Colors.transparent,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Math to Braille',
+                            style: TextStyle(
+                              color:
+                                  !isPlainToBraille
+                                      ? Colors.white
+                                      : AppColors.primaryColor,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -80,31 +105,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                   : const MathToBraille(),
             ],
-          ),
-        ),
-      ),
-      floatingActionButton: Container(
-        width: 60,
-        height: 60,
-        decoration: BoxDecoration(
-          border: Border.all(color: AppColors.primaryColor, width: 4.0),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: FloatingActionButton(
-          onPressed: () async {
-            final result = await Navigator.pushNamed(context, '/text-scanner');
-            if (result != null && result is String) {
-              setState(() {
-                scannedTextFromScanner = result;
-              });
-            }
-          },
-          backgroundColor: AppColors.whiteColor,
-          elevation: 0,
-          child: Icon(
-            Icons.camera_alt_rounded,
-            color: AppColors.primaryColor,
-            size: 28,
           ),
         ),
       ),

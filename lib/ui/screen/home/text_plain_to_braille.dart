@@ -47,12 +47,22 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Label(text: 'Plain Text'),
         DashedTextFormField(
           hintText: 'Type here...',
           controller: plainTextController,
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 8),
+        BasicButton(
+          text: 'Upload File',
+          textStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: AppColors.whiteColor,
+          ),
+          onPress: () {
+            Navigator.pushNamed(context, '/document');
+          },
+        ),
+        const SizedBox(height: 10),
         BasicButton(
           text: 'Translate',
           onPress: () {
@@ -66,50 +76,35 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
         ),
         const SizedBox(height: 16),
         Label(text: 'Braille Text'),
-        DashedTextFormField(hintText: '', controller: brailleTextController),
+        DashedTextFormField(controller: brailleTextController, readOnly: true),
         const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                BasicButton(
-                  text: 'Scan Document',
-                  onPress: () {
-                    Navigator.pushNamed(context, '/document');
-                  },
-                ),
-              ],
+            BasicButton(
+              text: 'Copy',
+              backgroundColor: AppColors.whiteColor,
+              width: 56,
+              height: 24,
+              border: BorderSide(color: AppColors.primaryColor, width: 1),
+              textStyle: AppTextStyle.smallGreenBold,
+              onPress: () {
+                Clipboard.setData(
+                  ClipboardData(text: brailleTextController.text),
+                );
+              },
             ),
-            Row(
-              children: [
-                BasicButton(
-                  text: 'Copy',
-                  backgroundColor: AppColors.whiteColor,
-                  width: 56,
-                  height: 24,
-                  border: BorderSide(color: AppColors.primaryColor, width: 1),
-                  textStyle: AppTextStyle.smallGreenBold,
-                  onPress: () {
-                    Clipboard.setData(
-                      ClipboardData(text: brailleTextController.text),
-                    );
-                  },
-                ),
-                const SizedBox(width: 10),
-                BasicButton(
-                  text: 'Reset',
-                  backgroundColor: AppColors.whiteColor,
-                  width: 56,
-                  height: 24,
-                  border: BorderSide(color: AppColors.primaryColor, width: 1),
-                  textStyle: AppTextStyle.smallGreenBold,
-                  onPress: () {
-                    brailleTextController.clear();
-                    plainTextController.clear();
-                  },
-                ),
-              ],
+            BasicButton(
+              text: 'Reset',
+              backgroundColor: AppColors.whiteColor,
+              width: 56,
+              height: 24,
+              border: BorderSide(color: AppColors.primaryColor, width: 1),
+              textStyle: AppTextStyle.smallGreenBold,
+              onPress: () {
+                brailleTextController.clear();
+                plainTextController.clear();
+              },
             ),
           ],
         ),

@@ -32,27 +32,43 @@ class _MathToBrailleState extends State<MathToBraille> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Label(text: 'Plain Text'),
         DashedTextFormField(
           hintText: 'Type here...',
           controller: mathTextController,
         ),
         const SizedBox(height: 8),
-
-        Align(
-          alignment: Alignment.centerRight,
-          child: TextButton(
-            onPressed: () {
-              setState(() {
-                _showMathKeyboard = !_showMathKeyboard;
-              });
-            },
-            child: Text(
-              _showMathKeyboard ? 'Hide Math Keyboard' : 'Show Math Keyboard',
-              style: AppTextStyle.mediumGreen,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            BasicButton(
+              text: 'Upload File',
+              textStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: AppColors.whiteColor,
+              ),
+              onPress: () {
+                Navigator.pushNamed(context, '/document');
+              },
             ),
-          ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    _showMathKeyboard = !_showMathKeyboard;
+                  });
+                },
+                child: Text(
+                  _showMathKeyboard
+                      ? 'Hide Math Keyboard'
+                      : 'Show Math Keyboard',
+                  style: AppTextStyle.mediumGreen,
+                ),
+              ),
+            ),
+          ],
         ),
+        SizedBox(height: 10),
 
         if (_showMathKeyboard) ...[
           const SizedBox(height: 8),
@@ -68,7 +84,10 @@ class _MathToBrailleState extends State<MathToBraille> {
                         text: group,
                         height: 28,
                         width: 90,
-                        textStyle: AppTextStyle.smallGreenBold,
+                        textStyle:
+                            isSelected
+                                ? TextStyle(color: AppColors.whiteColor)
+                                : AppTextStyle.smallGreenBold,
                         backgroundColor:
                             isSelected
                                 ? AppColors.primaryColor
@@ -99,9 +118,8 @@ class _MathToBrailleState extends State<MathToBraille> {
           ),
           const SizedBox(height: 16),
         ],
-
         BasicButton(
-          text: 'Convert',
+          text: 'Translate',
           onPress: () {
             final input = mathTextController.text;
             final output = latinToBraille(input);
@@ -113,50 +131,35 @@ class _MathToBrailleState extends State<MathToBraille> {
         ),
         const SizedBox(height: 16),
         Label(text: 'Braille Text'),
-        DashedTextFormField(controller: brailleTextController),
+        DashedTextFormField(controller: brailleTextController, readOnly: true),
         const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                BasicButton(
-                  text: 'Scan Document',
-                  onPress: () {
-                    Navigator.pushNamed(context, '/document');
-                  },
-                ),
-              ],
+            BasicButton(
+              text: 'Copy',
+              backgroundColor: AppColors.whiteColor,
+              width: 56,
+              height: 24,
+              border: BorderSide(color: AppColors.primaryColor, width: 1),
+              textStyle: AppTextStyle.smallGreenBold,
+              onPress: () {
+                Clipboard.setData(
+                  ClipboardData(text: brailleTextController.text),
+                );
+              },
             ),
-            Row(
-              children: [
-                BasicButton(
-                  text: 'Copy',
-                  backgroundColor: AppColors.whiteColor,
-                  width: 56,
-                  height: 24,
-                  border: BorderSide(color: AppColors.primaryColor, width: 1),
-                  textStyle: AppTextStyle.smallGreenBold,
-                  onPress: () {
-                    Clipboard.setData(
-                      ClipboardData(text: brailleTextController.text),
-                    );
-                  },
-                ),
-                const SizedBox(width: 10),
-                BasicButton(
-                  text: 'Reset',
-                  backgroundColor: AppColors.whiteColor,
-                  width: 56,
-                  height: 24,
-                  border: BorderSide(color: AppColors.primaryColor, width: 1),
-                  textStyle: AppTextStyle.smallGreenBold,
-                  onPress: () {
-                    brailleTextController.clear();
-                    mathTextController.clear();
-                  },
-                ),
-              ],
+            BasicButton(
+              text: 'Reset',
+              backgroundColor: AppColors.whiteColor,
+              width: 56,
+              height: 24,
+              border: BorderSide(color: AppColors.primaryColor, width: 1),
+              textStyle: AppTextStyle.smallGreenBold,
+              onPress: () {
+                brailleTextController.clear();
+                mathTextController.clear();
+              },
             ),
           ],
         ),
