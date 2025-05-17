@@ -5,11 +5,13 @@ import 'package:dotted_border/dotted_border.dart';
 class DashedTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final String? hintText;
+  final bool readOnly;
 
   const DashedTextFormField({
     super.key,
     required this.controller,
     this.hintText,
+    this.readOnly = false,
   });
 
   @override
@@ -23,6 +25,7 @@ class DashedTextFormField extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: TextFormField(
+          readOnly: readOnly,
           style: const TextStyle(fontSize: 16.0),
           maxLines: 5,
           controller: controller,
