@@ -31,14 +31,19 @@ const Map<String, String> _brailleMap = {
   '+': '⠖',
   '=': '⠒⠒',
   '*': '⠡',
-  '%': '⠨⠴',
+  '×': '⠡',
+  '÷': '⠌⠌',
+  '%': '⠏⠎',
   '^': '⠘',
   '<': '⠣',
   '>': '⠜',
-  '≠': '⠒',
+  '≠': '⠒⠺',
   // Unicode math symbols
   '≤': '⠲⠣',
   '≥': '⠲⠜',
+  '°': '⠙⠗',
+  '∠': '⠎⠙',
+  '√': '⠻',
 };
 
 // Multi-character symbols (e.g., <=, =>)
@@ -46,6 +51,8 @@ const Map<String, String> _brailleMultiCharMap = {
   '<=': '⠲⠣',
   '>=': '⠲⠜',
   '=>': '⠰⠶',
+  '^2': '⠣',
+  '^3': '⠩',
 };
 
 const String _capitalIndicator = '⠠';
