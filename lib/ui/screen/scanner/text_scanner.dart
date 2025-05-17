@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math' as math;
-import 'package:braille_app/ui/screen/scanner/result_screen.dart';
 import 'package:braille_app/ui/shared/basic_button.dart';
 import 'package:braille_app/utils/config/theme/app_text_style.dart';
 import 'package:flutter/material.dart';
