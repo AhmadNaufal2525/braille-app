@@ -18,7 +18,7 @@ class TextScanner extends StatefulWidget {
 
 class _TextScannerState extends State<TextScanner> with WidgetsBindingObserver {
   CameraController? cameraController;
-  final textRecognizer = TextRecognizer();
+  final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
   bool isPermissionGranted = false;
   late Future<void> future;
   RecognizedText? _recognizedText;
