@@ -201,11 +201,11 @@ class _TextScannerState extends State<TextScanner> with WidgetsBindingObserver {
                         children: [
                           Expanded(child: Container()),
                           Container(
-                            padding: const EdgeInsets.only(bottom: 30.0),
+                            padding: const EdgeInsets.only(bottom: 50.0),
                             child: Center(
                               child: BasicButton(
                                 width: 162,
-                                height: 32,
+                                height: 40,
                                 text: 'Scan',
                                 textStyle: AppTextStyle.largeWhiteBold,
                                 onPress: () {
