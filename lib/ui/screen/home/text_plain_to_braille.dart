@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 
 class TextPlainToBraille extends StatefulWidget {
   final String initialScannedText;
-  const TextPlainToBraille({super.key, this.initialScannedText = ''});
+  const TextPlainToBraille({super.key, required this.initialScannedText,});
 
   @override
   State<TextPlainToBraille> createState() => _TextPlainToBrailleState();
@@ -54,6 +54,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
         const SizedBox(height: 8),
         BasicButton(
           height: 35,
+          width: 20,
           text: 'Upload File',
           textStyle: TextStyle(
             fontWeight: FontWeight.bold,
@@ -72,7 +73,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
             brailleTextController.text = output;
           },
           height: 48,
-          width: 350,
+          width: double.infinity,
           textStyle: AppTextStyle.xlargeWhiteBold,
         ),
         const SizedBox(height: 16),

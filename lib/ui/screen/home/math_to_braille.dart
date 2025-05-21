@@ -42,6 +42,7 @@ class _MathToBrailleState extends State<MathToBraille> {
           children: [
             BasicButton(
               height: 35,
+              width: 20,
               text: 'Upload File',
               textStyle: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -127,7 +128,7 @@ class _MathToBrailleState extends State<MathToBraille> {
             brailleTextController.text = output;
           },
           height: 48,
-          width: 350,
+          width: double.infinity,
           textStyle: AppTextStyle.xlargeWhiteBold,
         ),
         const SizedBox(height: 16),
