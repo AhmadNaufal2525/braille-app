@@ -2,11 +2,12 @@ import 'package:braille_app/utils/config/assets/app_vector.dart';
 import 'package:braille_app/utils/config/theme/app_colors.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SecondPageOnboard extends StatelessWidget {
   final VoidCallback onNext;
   final int currentPage;
+
   const SecondPageOnboard({
     super.key,
     required this.onNext,
@@ -15,19 +16,38 @@ class SecondPageOnboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final screenHeight = size.height;
+    final screenWidth = size.width;
+
     return SingleChildScrollView(
       child: Column(
         children: [
           Stack(
             children: [
-              SvgPicture.asset(AppVectors.onboardShape, height: 555),
+              Container(
+                width: double.infinity,
+                height: 30,
+                color: AppColors.primaryColor,
+              ),
+              Transform.translate(
+                offset: const Offset(0, -40),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: SvgPicture.asset(
+                    AppVectors.onboardShape,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Center(
                     child: SizedBox(
-                      height: 400,
-                      width: 340,
+                      height: screenHeight * 0.46,
+                      width: screenWidth * 0.75,
                       child: SvgPicture.asset(AppVectors.onboardImg2),
                     ),
                   ),
@@ -35,6 +55,8 @@ class SecondPageOnboard extends StatelessWidget {
                     dotsCount: 3,
                     position: currentPage.toDouble(),
                     decorator: const DotsDecorator(
+                      size: Size(12.0, 12.0),
+                      activeSize: Size(12.0, 12.0),
                       color: AppColors.whiteColor,
                       activeColor: AppColors.primaryColor,
                     ),
@@ -43,30 +65,37 @@ class SecondPageOnboard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 20.0),
+          SizedBox(height: screenHeight * 0.02),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.05,
+              vertical: screenHeight * 0.02,
+            ),
             child: Column(
-              spacing: 10,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Membantu Tugas !',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: screenWidth * 0.045,
+                  ),
                 ),
+                SizedBox(height: screenHeight * 0.01),
                 Text(
-                  'Dengan bantuan scan yang dapat mengubah format kedalam bentuk Braille pada dokumen, diharapkan dapat membantu para guru memberikan tugas maupun teman teman dalam mengerjakan tugas ',
-                  style: TextStyle(fontSize: 14.0),
+                  'Dengan bantuan scan yang dapat mengubah format kedalam bentuk Braille pada dokumen, diharapkan dapat membantu para guru memberikan tugas maupun teman teman dalam mengerjakan tugas',
+                  style: TextStyle(fontSize: screenWidth * 0.04),
                 ),
+                SizedBox(height: screenHeight * 0.03),
                 Align(
                   alignment: AlignmentDirectional.bottomEnd,
                   child: InkWell(
                     onTap: onNext,
                     borderRadius: BorderRadius.circular(30),
                     child: Container(
-                      width: 56,
-                      height: 56,
-                      decoration: BoxDecoration(
+                      width: screenWidth * 0.14,
+                      height: screenWidth * 0.14,
+                      decoration: const BoxDecoration(
                         gradient: LinearGradient(
                           colors: [AppColors.primaryColor, Color(0xFF1C3437)],
                           begin: Alignment.topCenter,
@@ -77,7 +106,7 @@ class SecondPageOnboard extends StatelessWidget {
                       child: const Icon(
                         Icons.play_arrow_rounded,
                         color: AppColors.whiteColor,
-                        size: 40,
+                        size: 32,
                       ),
                     ),
                   ),
