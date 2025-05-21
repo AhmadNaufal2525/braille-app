@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'package:braille_app/ui/screen/home/widget/bottom_navigation.dart';
 import 'package:braille_app/ui/screen/onboard/onboard_screen.dart';
-import 'package:braille_app/utils/config/assets/app_vector.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -39,11 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: SizedBox(
-          height: 150,
-          width: 150,
-          child: SvgPicture.asset(AppVectors.logo),
-        ),
+        child: Image.asset('assets/images/logo.png', width: 150, height: 150),
       ),
     );
   }
