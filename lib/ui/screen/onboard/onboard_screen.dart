@@ -2,6 +2,7 @@ import 'package:braille_app/ui/screen/home/widget/bottom_navigation.dart';
 import 'package:braille_app/ui/screen/onboard/widget/first_page_onboard.dart';
 import 'package:braille_app/ui/screen/onboard/widget/second_page_onboard.dart';
 import 'package:braille_app/ui/screen/onboard/widget/third_page_onboard.dart';
+import 'package:braille_app/utils/config/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,11 +20,15 @@ Future initIntroduction() async {
   final prefs = await SharedPreferences.getInstance();
 
   int? intro = prefs.getInt('introduction');
-  print('intro : $intro');
   if (intro != null && intro == 1) {
     return introduction = 1;
   }
   prefs.setInt('introduction', 1);
+}
+
+Future<void> completeOnboarding() async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setInt('introduction', 1);
 }
 
 class _OnboardScreenState extends State<OnboardScreen> {
@@ -34,6 +39,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
+        physics: NeverScrollableScrollPhysics(),
         controller: controller,
         onPageChanged: (int page) {
           setState(() {
@@ -42,37 +48,47 @@ class _OnboardScreenState extends State<OnboardScreen> {
         },
         children: [
           //First Onboarding Page
-          FirstPageOnboard(
-            currentPage: currentPage,
-            onNext: () {
-              controller.nextPage(
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.ease,
-              );
-            },
-          ),
+          FirstPageOnboard(currentPage: currentPage),
           //Second Onboarding
-          SecondPageOnboard(
-            currentPage: currentPage,
-            onNext: () {
-              controller.nextPage(
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.ease,
-              );
-            },
-          ),
+          SecondPageOnboard(currentPage: currentPage),
           //Third Onboarding
-          ThirdPageOnboard(
-            currentPage: currentPage,
-            onNext: () async {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const BottomNavigation(),
-                ),
-              );
-            },
-          ),
+          ThirdPageOnboard(currentPage: currentPage),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        onPressed: () {
+          if (currentPage == 2) {
+            completeOnboarding();
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const BottomNavigation()),
+            );
+          } else {
+            controller.nextPage(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.ease,
+            );
+          }
+        },
+        child: Container(
+          width: 56,
+          height: 56,
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [AppColors.primaryColor, Color(0xFF1C3437)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(
+            Icons.play_arrow_rounded,
+            color: AppColors.whiteColor,
+            size: 32,
+          ),
+        ),
       ),
     );
   }
