@@ -53,6 +53,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
         ),
         const SizedBox(height: 8),
         BasicButton(
+          height: 35,
           text: 'Upload File',
           textStyle: TextStyle(
             fontWeight: FontWeight.bold,
@@ -85,7 +86,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
               text: 'Copy',
               backgroundColor: AppColors.whiteColor,
               width: 56,
-              height: 24,
+              height: 28,
               border: BorderSide(color: AppColors.primaryColor, width: 1),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
@@ -98,7 +99,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
               text: 'Reset',
               backgroundColor: AppColors.whiteColor,
               width: 56,
-              height: 24,
+              height: 28,
               border: BorderSide(color: AppColors.primaryColor, width: 1),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {

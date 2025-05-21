@@ -1,8 +1,9 @@
 import 'package:braille_app/ui/screen/document/document_screen.dart';
 import 'package:braille_app/ui/screen/home/home_screen.dart';
-import 'package:braille_app/utils/config/assets/app_images.dart';
+import 'package:braille_app/utils/config/assets/app_vector.dart';
 import 'package:braille_app/utils/config/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
@@ -60,19 +61,19 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     GestureDetector(
-                      child: Image.asset(
-                        AppImages.homeIcon,
-                        width: 30,
+                      child: SizedBox(
                         height: 30,
+                        width: 30,
+                        child: SvgPicture.asset(AppVectors.iconHome),
                       ),
                       onTap: () => onItemTapped(0),
                     ),
                     const SizedBox(width: 60),
                     GestureDetector(
-                      child: Image.asset(
-                        AppImages.brailleIcon,
-                        width: 30,
+                      child: SizedBox(
                         height: 30,
+                        width: 30,
+                        child: SvgPicture.asset(AppVectors.iconBraille),
                       ),
                       onTap: () => onItemTapped(1),
                     ),

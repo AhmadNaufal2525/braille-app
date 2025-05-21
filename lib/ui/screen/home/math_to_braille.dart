@@ -41,6 +41,7 @@ class _MathToBrailleState extends State<MathToBraille> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             BasicButton(
+              height: 35,
               text: 'Upload File',
               textStyle: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -140,7 +141,7 @@ class _MathToBrailleState extends State<MathToBraille> {
               text: 'Copy',
               backgroundColor: AppColors.whiteColor,
               width: 56,
-              height: 24,
+              height: 28,
               border: BorderSide(color: AppColors.primaryColor, width: 1),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
@@ -153,7 +154,7 @@ class _MathToBrailleState extends State<MathToBraille> {
               text: 'Reset',
               backgroundColor: AppColors.whiteColor,
               width: 56,
-              height: 24,
+              height: 28,
               border: BorderSide(color: AppColors.primaryColor, width: 1),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
