@@ -1,4 +1,3 @@
-import 'package:braille_app/utils/config/assets/app_images.dart';
 import 'package:braille_app/utils/config/assets/app_vector.dart';
 import 'package:braille_app/utils/config/theme/app_colors.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -26,10 +25,10 @@ class ThirdPageOnboard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Center(
-                    child: Image.asset(
-                      AppImages.onboardImage3,
+                    child: SizedBox(
+                      height: 400,
                       width: 340,
-                      height: 380,
+                      child: SvgPicture.asset(AppVectors.onboardImg3),
                     ),
                   ),
                   DotsIndicator(

@@ -8,7 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 int introduction = 0;
 
 class OnboardScreen extends StatefulWidget {
-  const OnboardScreen({super.key});
+  final String title;
+  const OnboardScreen({super.key, required this.title});
 
   @override
   State<OnboardScreen> createState() => _OnboardScreenState();
