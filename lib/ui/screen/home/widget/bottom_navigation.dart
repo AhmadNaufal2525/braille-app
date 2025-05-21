@@ -32,6 +32,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     final screenHeight = size.height;
     final screenWidth = size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
