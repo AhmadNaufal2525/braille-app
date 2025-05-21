@@ -14,13 +14,19 @@ class AppRoute {
         final title = settings.arguments as String;
         return _materialRoute(OnboardScreen(title: title));
       case '/home':
-        return _materialRoute(const HomeScreen());
+        final scannedTextFromScanner = settings.arguments as String;
+        return _materialRoute(
+          HomeScreen(scannedTextFromScanner: scannedTextFromScanner),
+        );
       case '/document':
         return _materialRoute(const DocumentScreen());
       case '/text-scanner':
         return _materialRoute(const TextScanner());
       default:
-        return _materialRoute(const HomeScreen());
+        final scannedTextFromScanner = settings.arguments as String;
+        return _materialRoute(
+          HomeScreen(scannedTextFromScanner: scannedTextFromScanner),
+        );
     }
   }
 
