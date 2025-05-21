@@ -16,23 +16,31 @@ class DashedTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    // Use only 25% of the screen height and estimate 1 line ≈ 24px
+    final estimatedLineHeight = 36.0;
+    final usableHeight = screenHeight * 0.25;
+    final maxLines = (usableHeight / estimatedLineHeight).floor().clamp(1, 20);
+
     return DottedBorder(
       color: AppColors.textBoxColor,
       strokeWidth: 1,
       dashPattern: [6, 3],
       borderType: BorderType.RRect,
-      radius: Radius.circular(8),
+      radius: const Radius.circular(8),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         child: TextFormField(
           readOnly: readOnly,
           style: const TextStyle(fontSize: 16.0),
-          maxLines: 5,
+          maxLines: maxLines,
           controller: controller,
+          keyboardType: TextInputType.multiline,
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: hintText,
-            hintStyle: TextStyle(fontSize: 14.0),
+            hintStyle: const TextStyle(fontSize: 14.0),
           ),
         ),
       ),
