@@ -5,7 +5,8 @@ import 'package:braille_app/utils/config/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String scannedTextFromScanner;
+  const HomeScreen({super.key, required this.scannedTextFromScanner});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -13,12 +14,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isPlainToBraille = true;
-  String scannedTextFromScanner = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bgColor,
+      resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
@@ -101,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
               // Pass scanned text to TextPlainToBraille
               isPlainToBraille
                   ? TextPlainToBraille(
-                    initialScannedText: scannedTextFromScanner,
+                    initialScannedText: widget.scannedTextFromScanner,
                   )
                   : const MathToBraille(),
             ],
