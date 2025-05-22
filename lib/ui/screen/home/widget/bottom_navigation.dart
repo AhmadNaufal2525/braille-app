@@ -3,6 +3,7 @@ import 'package:braille_app/ui/screen/home/home_screen.dart';
 import 'package:braille_app/utils/config/assets/app_vector.dart';
 import 'package:braille_app/utils/config/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -28,9 +29,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final screenHeight = size.height;
-    final screenWidth = size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -44,7 +42,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(bottom: screenHeight * 0.04),
+            padding: EdgeInsets.only(bottom: 30.r),
             child: Align(
               alignment: AlignmentDirectional.bottomCenter,
               child: Stack(
@@ -53,7 +51,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 children: [
                   // Navigation Bar Background
                   Container(
-                    height: screenHeight * 0.08,
+                    height: 52.h,
                     margin: const EdgeInsets.symmetric(horizontal: 15),
                     decoration: BoxDecoration(
                       color: AppColors.primaryColor,
@@ -72,19 +70,17 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         GestureDetector(
                           onTap: () => onItemTapped(0),
                           child: SizedBox(
-                            height: 30,
-                            width: 30,
+                            height: 30.h,
+                            width: 30.w,
                             child: SvgPicture.asset(AppVectors.iconHome),
                           ),
                         ),
-                        SizedBox(
-                          width: screenWidth * 0.15,
-                        ), // spacing around camera
+                        20.horizontalSpace,
                         GestureDetector(
                           onTap: () => onItemTapped(1),
                           child: SizedBox(
-                            height: 30,
-                            width: 30,
+                            height: 30.h,
+                            width: 30.w,
                             child: SvgPicture.asset(AppVectors.iconBraille),
                           ),
                         ),
@@ -94,13 +90,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   Positioned(
                     top: -14,
                     child: Container(
-                      width: screenWidth * 0.18,
-                      height: screenHeight * 0.08,
+                      width: 72.w,
+                      height: 67.h,
                       decoration: BoxDecoration(
                         color: AppColors.whiteColor,
                         border: Border.all(
                           color: AppColors.primaryColor,
-                          width: 4,
+                          width: 4.w,
                         ),
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -119,7 +115,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         icon: Icon(
                           Icons.camera_alt_rounded,
                           color: AppColors.primaryColor,
-                          size: 36,
+                          size: 36.sp,
                         ),
                       ),
                     ),
