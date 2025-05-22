@@ -4,6 +4,7 @@ import 'package:braille_app/ui/screen/onboard/widget/second_page_onboard.dart';
 import 'package:braille_app/ui/screen/onboard/widget/third_page_onboard.dart';
 import 'package:braille_app/utils/config/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 int introduction = 0;
@@ -57,7 +58,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.transparent,
-        elevation: 0,
+        elevation: 0.r,
         onPressed: () {
           if (currentPage == 2) {
             completeOnboarding();
@@ -73,8 +74,8 @@ class _OnboardScreenState extends State<OnboardScreen> {
           }
         },
         child: Container(
-          width: 56,
-          height: 56,
+          width: 56.w,
+          height: 56.h,
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               colors: [AppColors.primaryColor, Color(0xFF1C3437)],
@@ -83,10 +84,10 @@ class _OnboardScreenState extends State<OnboardScreen> {
             ),
             shape: BoxShape.circle,
           ),
-          child: const Icon(
+          child: Icon(
             Icons.play_arrow_rounded,
             color: AppColors.whiteColor,
-            size: 32,
+            size: 32.sp,
           ),
         ),
       ),
