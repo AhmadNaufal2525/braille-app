@@ -3,6 +3,7 @@ import 'package:braille_app/ui/screen/home/text_plain_to_braille.dart';
 import 'package:braille_app/ui/shared/label.dart';
 import 'package:braille_app/utils/config/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
   final String scannedTextFromScanner;
@@ -22,11 +23,10 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.bgColor,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 30),
               isPlainToBraille
                   ? Label(text: 'Plain Text')
                   : Label(text: 'Math Text'),
@@ -40,6 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                       },
                       child: AnimatedContainer(
+                        width: 320.w,
+                        height: 40.h,
                         duration: const Duration(milliseconds: 300),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         decoration: BoxDecoration(
@@ -47,17 +49,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               isPlainToBraille
                                   ? AppColors.primaryColor
                                   : Colors.transparent,
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(30).r,
                         ),
                         child: Center(
                           child: Text(
                             'Text to Braille',
                             style: TextStyle(
+                              fontSize: 12.0.sp,
                               color:
                                   isPlainToBraille
                                       ? Colors.white
                                       : AppColors.primaryColor,
-                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
@@ -72,6 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                       },
                       child: AnimatedContainer(
+                        width: 320.w,
+                        height: 40.h,
                         duration: const Duration(milliseconds: 300),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         decoration: BoxDecoration(
@@ -85,11 +89,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text(
                             'Math to Braille',
                             style: TextStyle(
+                              fontSize: 12.0.sp,
                               color:
                                   !isPlainToBraille
                                       ? Colors.white
                                       : AppColors.primaryColor,
-                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
@@ -98,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              20.verticalSpace,
               // Pass scanned text to TextPlainToBraille
               isPlainToBraille
                   ? TextPlainToBraille(
