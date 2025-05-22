@@ -5,64 +5,64 @@ import 'package:flutter/material.dart';
 class AppTextStyle {
   // ------------------- Black TextStyle ------------------------- //
 
-  static const xxSmallBlack = TextStyle(
+  static var xxSmallBlack = TextStyle(
     fontSize: AppFontSize.xxSmall,
     color: AppColors.blackColor,
   );
 
-  static const xSmallBlack = TextStyle(
+  static var xSmallBlack = TextStyle(
     fontSize: AppFontSize.xSmall,
     color: AppColors.blackColor,
   );
 
-  static const smallBlack = TextStyle(
+  static var smallBlack = TextStyle(
     fontSize: AppFontSize.small,
     color: AppColors.blackColor,
   );
 
-  static const mediumBlack = TextStyle(
+  static var mediumBlack = TextStyle(
     fontSize: AppFontSize.medium,
     color: AppColors.blackColor,
     fontWeight: FontWeight.normal,
   );
 
-  static const mediumBlackBold = TextStyle(
+  static var mediumBlackBold = TextStyle(
     fontSize: AppFontSize.medium,
     color: AppColors.blackColor,
     fontWeight: FontWeight.bold,
   );
 
-  static const largeBlack = TextStyle(
+  static var largeBlack = TextStyle(
     fontSize: AppFontSize.large,
     color: AppColors.blackColor,
     fontWeight: FontWeight.normal,
   );
 
-  static const xlargeBlack = TextStyle(
+  static var xlargeBlack = TextStyle(
     fontSize: AppFontSize.xLarge,
     color: AppColors.blackColor,
     fontWeight: FontWeight.normal,
   );
 
-  static const xlargeBlackBold = TextStyle(
+  static var xlargeBlackBold = TextStyle(
     fontSize: AppFontSize.xLarge,
     color: AppColors.blackColor,
     fontWeight: FontWeight.bold,
   );
 
-  static const xxlargeBlack = TextStyle(
+  static var xxlargeBlack = TextStyle(
     fontSize: AppFontSize.xxLarge,
     color: AppColors.blackColor,
     fontWeight: FontWeight.normal,
   );
 
-  static const xxxlargeBlack = TextStyle(
+  static var xxxlargeBlack = TextStyle(
     fontSize: AppFontSize.xxxLarge,
     color: AppColors.blackColor,
     fontWeight: FontWeight.normal,
   );
 
-  static const xxxlargeBlackBold = TextStyle(
+  static var xxxlargeBlackBold = TextStyle(
     fontSize: AppFontSize.xxxLarge,
     color: AppColors.blackColor,
     fontWeight: FontWeight.bold,
@@ -70,64 +70,64 @@ class AppTextStyle {
 
   // ------------------- White TextStyle ------------------------- //
 
-  static const xxSmallWhite = TextStyle(
+  static var xxSmallWhite = TextStyle(
     fontSize: AppFontSize.xxSmall,
     color: AppColors.whiteColor,
   );
 
-  static const xSmallWhite = TextStyle(
+  static var xSmallWhite = TextStyle(
     fontSize: AppFontSize.xSmall,
     color: AppColors.whiteColor,
   );
 
-  static const smallWhite = TextStyle(
+  static var smallWhite = TextStyle(
     fontSize: AppFontSize.small,
     color: AppColors.whiteColor,
   );
 
-  static const mediumWhite = TextStyle(
+  static var mediumWhite = TextStyle(
     fontSize: AppFontSize.medium,
     color: AppColors.whiteColor,
     fontWeight: FontWeight.normal,
   );
 
-  static const largeWhite = TextStyle(
+  static var largeWhite = TextStyle(
     fontSize: AppFontSize.large,
     color: AppColors.whiteColor,
     fontWeight: FontWeight.normal,
   );
 
-  static const largeWhiteBold = TextStyle(
+  static var largeWhiteBold = TextStyle(
     fontSize: AppFontSize.large,
     color: AppColors.whiteColor,
     fontWeight: FontWeight.bold,
   );
 
-  static const xlargeWhite = TextStyle(
+  static var xlargeWhite = TextStyle(
     fontSize: AppFontSize.xLarge,
     color: AppColors.whiteColor,
     fontWeight: FontWeight.normal,
   );
 
-  static const xlargeWhiteBold = TextStyle(
+  static var xlargeWhiteBold = TextStyle(
     fontSize: AppFontSize.xLarge,
     color: AppColors.whiteColor,
     fontWeight: FontWeight.bold,
   );
 
-  static const xxlargeWhite = TextStyle(
+  static var xxlargeWhite = TextStyle(
     fontSize: AppFontSize.xxLarge,
     color: AppColors.whiteColor,
     fontWeight: FontWeight.normal,
   );
 
-  static const xxxlargeWhite = TextStyle(
+  static var xxxlargeWhite = TextStyle(
     fontSize: AppFontSize.xxxLarge,
     color: AppColors.whiteColor,
     fontWeight: FontWeight.normal,
   );
 
-  static const xxxlargeWhiteBold = TextStyle(
+  static var xxxlargeWhiteBold = TextStyle(
     fontSize: AppFontSize.xxxLarge,
     color: AppColors.whiteColor,
     fontWeight: FontWeight.bold,
@@ -135,64 +135,64 @@ class AppTextStyle {
 
   // ------------------- Green TextStyle ------------------------- //
 
-  static const xxSmallGreen = TextStyle(
+  static var xxSmallGreen = TextStyle(
     fontSize: AppFontSize.xxSmall,
     color: AppColors.primaryColor,
   );
 
-  static const xSmallGreen = TextStyle(
+  static var xSmallGreen = TextStyle(
     fontSize: AppFontSize.xSmall,
     color: AppColors.primaryColor,
   );
 
-  static const smallGreen = TextStyle(
+  static var smallGreen = TextStyle(
     fontSize: AppFontSize.small,
     color: AppColors.primaryColor,
   );
 
-  static const smallGreenBold = TextStyle(
+  static var smallGreenBold = TextStyle(
     fontSize: AppFontSize.small,
     color: AppColors.primaryColor,
     fontWeight: FontWeight.bold,
   );
 
-  static const mediumGreen = TextStyle(
+  static var mediumGreen = TextStyle(
     fontSize: AppFontSize.medium,
     color: AppColors.primaryColor,
     fontWeight: FontWeight.normal,
   );
 
-  static const largeGreen = TextStyle(
+  static var largeGreen = TextStyle(
     fontSize: AppFontSize.large,
     color: AppColors.primaryColor,
     fontWeight: FontWeight.normal,
   );
 
-  static const xlargeGreen = TextStyle(
+  static var xlargeGreen = TextStyle(
     fontSize: AppFontSize.xLarge,
     color: AppColors.primaryColor,
     fontWeight: FontWeight.normal,
   );
 
-  static const xlargeWhiGreen = TextStyle(
+  static var xlargeWhiGreen = TextStyle(
     fontSize: AppFontSize.xLarge,
     color: AppColors.primaryColor,
     fontWeight: FontWeight.bold,
   );
 
-  static const xxlargeGreen = TextStyle(
+  static var xxlargeGreen = TextStyle(
     fontSize: AppFontSize.xxLarge,
     color: AppColors.primaryColor,
     fontWeight: FontWeight.normal,
   );
 
-  static const xxxlargeGreen = TextStyle(
+  static var xxxlargeGreen = TextStyle(
     fontSize: AppFontSize.xxxLarge,
     color: AppColors.primaryColor,
     fontWeight: FontWeight.normal,
   );
 
-  static const xxxlargeWhiteGreen = TextStyle(
+  static var xxxlargeWhiteGreen = TextStyle(
     fontSize: AppFontSize.xxxLarge,
     color: AppColors.primaryColor,
     fontWeight: FontWeight.bold,
