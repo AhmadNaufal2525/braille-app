@@ -6,6 +6,7 @@ import 'package:braille_app/utils/config/theme/app_colors.dart';
 import 'package:braille_app/utils/config/theme/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MathToBraille extends StatefulWidget {
   const MathToBraille({super.key});
@@ -36,13 +37,13 @@ class _MathToBrailleState extends State<MathToBraille> {
           hintText: 'Type here...',
           controller: mathTextController,
         ),
-        const SizedBox(height: 8),
+        8.verticalSpace,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             BasicButton(
-              height: 35,
-              width: 20,
+              height: 35.h,
+              width: 20.w,
               text: 'Upload File',
               textStyle: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -70,10 +71,9 @@ class _MathToBrailleState extends State<MathToBraille> {
             ),
           ],
         ),
-        SizedBox(height: 10),
-
+        10.verticalSpace,
         if (_showMathKeyboard) ...[
-          const SizedBox(height: 8),
+          8.verticalSpace,
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -84,8 +84,8 @@ class _MathToBrailleState extends State<MathToBraille> {
                       padding: const EdgeInsets.symmetric(horizontal: 4),
                       child: BasicButton(
                         text: group,
-                        height: 28,
-                        width: 90,
+                        height: 28.h,
+                        width: 90.w,
                         textStyle:
                             isSelected
                                 ? TextStyle(color: AppColors.whiteColor)
@@ -108,7 +108,7 @@ class _MathToBrailleState extends State<MathToBraille> {
                   }).toList(),
             ),
           ),
-          const SizedBox(height: 8),
+          8.verticalSpace,
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -118,7 +118,7 @@ class _MathToBrailleState extends State<MathToBraille> {
                       .toList(),
             ),
           ),
-          const SizedBox(height: 16),
+          16.verticalSpace,
         ],
         BasicButton(
           text: 'Translate',
@@ -127,22 +127,22 @@ class _MathToBrailleState extends State<MathToBraille> {
             final output = latinToBraille(input);
             brailleTextController.text = output;
           },
-          height: 48,
+          height: 48.h,
           width: double.infinity,
           textStyle: AppTextStyle.xlargeWhiteBold,
         ),
-        const SizedBox(height: 16),
+        40.verticalSpace,
         Label(text: 'Braille Text'),
         DashedTextFormField(controller: brailleTextController, readOnly: true),
-        const SizedBox(height: 10),
+        7.verticalSpace,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             BasicButton(
               text: 'Copy',
               backgroundColor: AppColors.whiteColor,
-              width: 56,
-              height: 28,
+              width: 56.w,
+              height: 28.h,
               border: BorderSide(color: AppColors.primaryColor, width: 1),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
@@ -154,8 +154,8 @@ class _MathToBrailleState extends State<MathToBraille> {
             BasicButton(
               text: 'Reset',
               backgroundColor: AppColors.whiteColor,
-              width: 56,
-              height: 28,
+              width: 56.w,
+              height: 28.h,
               border: BorderSide(color: AppColors.primaryColor, width: 1),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
@@ -174,8 +174,8 @@ class _MathToBrailleState extends State<MathToBraille> {
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: BasicButton(
         text: symbol,
-        height: 32,
-        width: 40,
+        height: 32.h,
+        width: 40.w,
         textStyle: AppTextStyle.smallGreenBold,
         backgroundColor: AppColors.whiteColor,
         border: BorderSide(color: AppColors.primaryColor, width: 1),
