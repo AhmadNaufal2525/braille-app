@@ -6,10 +6,11 @@ import 'package:braille_app/utils/config/theme/app_colors.dart';
 import 'package:braille_app/utils/config/theme/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TextPlainToBraille extends StatefulWidget {
   final String initialScannedText;
-  const TextPlainToBraille({super.key, required this.initialScannedText,});
+  const TextPlainToBraille({super.key, required this.initialScannedText});
 
   @override
   State<TextPlainToBraille> createState() => _TextPlainToBrailleState();
@@ -51,10 +52,10 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
           hintText: 'Type here...',
           controller: plainTextController,
         ),
-        const SizedBox(height: 8),
+        8.verticalSpace,
         BasicButton(
-          height: 35,
-          width: 20,
+          height: 35.h,
+          width: 20.w,
           text: 'Upload File',
           textStyle: TextStyle(
             fontWeight: FontWeight.bold,
@@ -64,7 +65,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
             Navigator.pushNamed(context, '/document');
           },
         ),
-        const SizedBox(height: 10),
+        10.verticalSpace,
         BasicButton(
           text: 'Translate',
           onPress: () {
@@ -72,23 +73,23 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
             final output = latinToBraille(input);
             brailleTextController.text = output;
           },
-          height: 48,
+          height: 48.h,
           width: double.infinity,
           textStyle: AppTextStyle.xlargeWhiteBold,
         ),
-        const SizedBox(height: 16),
+        38.verticalSpace,
         Label(text: 'Braille Text'),
         DashedTextFormField(controller: brailleTextController, readOnly: true),
-        const SizedBox(height: 10),
+        7.verticalSpace,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             BasicButton(
               text: 'Copy',
               backgroundColor: AppColors.whiteColor,
-              width: 56,
-              height: 28,
-              border: BorderSide(color: AppColors.primaryColor, width: 1),
+              width: 56.w,
+              height: 28.h,
+              border: BorderSide(color: AppColors.primaryColor, width: 1.w),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
                 Clipboard.setData(
@@ -99,9 +100,9 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
             BasicButton(
               text: 'Reset',
               backgroundColor: AppColors.whiteColor,
-              width: 56,
-              height: 28,
-              border: BorderSide(color: AppColors.primaryColor, width: 1),
+              width: 56.w,
+              height: 28.h,
+              border: BorderSide(color: AppColors.primaryColor, width: 1.w),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
                 brailleTextController.clear();
