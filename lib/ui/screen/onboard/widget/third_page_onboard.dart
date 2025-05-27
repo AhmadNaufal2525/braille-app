@@ -23,15 +23,22 @@ class ThirdPageOnboard extends StatelessWidget {
               width: double.infinity,
               color: AppColors.primaryColor,
             ),
-            SvgPicture.asset(
-              AppVectors.onboardShape,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: 0.6.sh,
+            Transform.translate(
+              offset:
+                  MediaQuery.of(context).size.height < 800
+                      ? const Offset(0, -30)
+                      : const Offset(0, -10),
+              child: SvgPicture.asset(
+                AppVectors.onboardShape,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height:
+                    MediaQuery.of(context).size.height < 800 ? 0.64.sh : 0.6.sh,
+              ),
             ),
             SafeArea(
               child: Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: EdgeInsets.all(12.0.w),
                 child: Column(
                   spacing: 58,
                   children: [
@@ -59,7 +66,10 @@ class ThirdPageOnboard extends StatelessWidget {
           ],
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+          padding:
+              MediaQuery.of(context).size.height < 800
+                  ? EdgeInsets.symmetric(horizontal: 16)
+                  : EdgeInsets.symmetric(horizontal: 16, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
