@@ -1,6 +1,7 @@
 import 'package:braille_app/utils/config/theme/app_colors.dart';
 import 'package:braille_app/utils/config/theme/app_text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BasicButton extends StatelessWidget {
   final String text;
@@ -31,7 +32,7 @@ class BasicButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPress,
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(width ?? 160, height ?? 32),
+        minimumSize: Size(width ?? 160.w, height ?? 32.h),
         backgroundColor: backgroundColor ?? AppColors.primaryColor,
         foregroundColor: foregroundColor,
         shape: RoundedRectangleBorder(
