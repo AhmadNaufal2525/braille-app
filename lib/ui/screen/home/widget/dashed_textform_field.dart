@@ -17,16 +17,18 @@ class DashedTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final fieldHeight = screenHeight < 700 ? 0.12.sh : 0.2.sh;
     return DottedBorder(
       color: AppColors.textBoxColor,
       strokeWidth: 1.w,
       dashPattern: [6, 3],
       borderType: BorderType.RRect,
-      radius: const Radius.circular(8),
+      radius: Radius.circular(8.r),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.w),
         child: SizedBox(
-          height: 0.178.sh,
+          height: fieldHeight,
           child: TextFormField(
             readOnly: readOnly,
             style: TextStyle(fontSize: 14.0.sp),
