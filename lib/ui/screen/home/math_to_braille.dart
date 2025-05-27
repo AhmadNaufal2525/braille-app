@@ -131,10 +131,10 @@ class _MathToBrailleState extends State<MathToBraille> {
           width: double.infinity,
           textStyle: AppTextStyle.xlargeWhiteBold,
         ),
-        40.verticalSpace,
+        20.verticalSpace,
         Label(text: 'Braille Text'),
         DashedTextFormField(controller: brailleTextController, readOnly: true),
-        7.verticalSpace,
+        10.verticalSpace,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -142,8 +142,8 @@ class _MathToBrailleState extends State<MathToBraille> {
               text: 'Copy',
               backgroundColor: AppColors.whiteColor,
               width: 56.w,
-              height: 28.h,
-              border: BorderSide(color: AppColors.primaryColor, width: 1),
+              height: 30.h,
+              border: BorderSide(color: AppColors.primaryColor, width: 1.w),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
                 Clipboard.setData(
@@ -155,8 +155,8 @@ class _MathToBrailleState extends State<MathToBraille> {
               text: 'Reset',
               backgroundColor: AppColors.whiteColor,
               width: 56.w,
-              height: 28.h,
-              border: BorderSide(color: AppColors.primaryColor, width: 1),
+              height: 30.h,
+              border: BorderSide(color: AppColors.primaryColor, width: 1.w),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
                 brailleTextController.clear();

@@ -52,7 +52,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
           hintText: 'Type here...',
           controller: plainTextController,
         ),
-        8.verticalSpace,
+        10.verticalSpace,
         BasicButton(
           height: 35.h,
           width: 20.w,
@@ -77,10 +77,10 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
           width: double.infinity,
           textStyle: AppTextStyle.xlargeWhiteBold,
         ),
-        38.verticalSpace,
+        20.verticalSpace,
         Label(text: 'Braille Text'),
         DashedTextFormField(controller: brailleTextController, readOnly: true),
-        7.verticalSpace,
+        10.verticalSpace,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -88,7 +88,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
               text: 'Copy',
               backgroundColor: AppColors.whiteColor,
               width: 56.w,
-              height: 28.h,
+              height: 30.h,
               border: BorderSide(color: AppColors.primaryColor, width: 1.w),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
@@ -101,7 +101,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
               text: 'Reset',
               backgroundColor: AppColors.whiteColor,
               width: 56.w,
-              height: 28.h,
+              height: 30.h,
               border: BorderSide(color: AppColors.primaryColor, width: 1.w),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
