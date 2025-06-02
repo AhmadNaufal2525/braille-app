@@ -42,12 +42,11 @@ class _MathToBrailleState extends State<MathToBraille> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             BasicButton(
-              height: 35.h,
+              height: MediaQuery.of(context).size.height < 700 ? 40.h : 45.h,
               width: 20.w,
               text: 'Upload File',
-              textStyle: TextStyle(
+              textStyle: AppTextStyle.mediumWhite.copyWith(
                 fontWeight: FontWeight.bold,
-                color: AppColors.whiteColor,
               ),
               onPress: () {
                 Navigator.pushNamed(context, '/document');
@@ -65,7 +64,10 @@ class _MathToBrailleState extends State<MathToBraille> {
                   _showMathKeyboard
                       ? 'Hide Math Keyboard'
                       : 'Show Math Keyboard',
-                  style: AppTextStyle.mediumGreen,
+                  style:
+                      MediaQuery.of(context).size.height < 700
+                          ? AppTextStyle.smallGreen
+                          : AppTextStyle.mediumGreen,
                 ),
               ),
             ),
@@ -142,7 +144,7 @@ class _MathToBrailleState extends State<MathToBraille> {
               text: 'Copy',
               backgroundColor: AppColors.whiteColor,
               width: 56.w,
-              height: 30.h,
+              height: MediaQuery.of(context).size.height < 700 ? 40.h : 45.h,
               border: BorderSide(color: AppColors.primaryColor, width: 1.w),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
@@ -155,7 +157,7 @@ class _MathToBrailleState extends State<MathToBraille> {
               text: 'Reset',
               backgroundColor: AppColors.whiteColor,
               width: 56.w,
-              height: 30.h,
+              height: MediaQuery.of(context).size.height < 700 ? 40.h : 45.h,
               border: BorderSide(color: AppColors.primaryColor, width: 1.w),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {

@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 
 class TextPlainToBraille extends StatefulWidget {
@@ -61,12 +60,11 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
         ),
         10.verticalSpace,
         BasicButton(
-          height: 35.h,
+          height: MediaQuery.of(context).size.height < 700 ? 40.h : 45.h,
           width: 20.w,
           text: 'Upload File',
-          textStyle: TextStyle(
+          textStyle: AppTextStyle.mediumWhite.copyWith(
             fontWeight: FontWeight.bold,
-            color: AppColors.whiteColor,
           ),
           onPress: () {
             Navigator.pushNamed(context, '/document');
@@ -95,7 +93,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
               text: 'Copy',
               backgroundColor: AppColors.whiteColor,
               width: 56.w,
-              height: 30.h,
+              height: MediaQuery.of(context).size.height < 700 ? 40.h : 45.h,
               border: BorderSide(color: AppColors.primaryColor, width: 1.w),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
@@ -108,7 +106,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
               text: 'Save as doc',
               backgroundColor: AppColors.whiteColor,
               width: 56.w,
-              height: 28.h,
+              height: MediaQuery.of(context).size.height < 700 ? 40.h : 45.h,
               border: BorderSide(color: AppColors.primaryColor, width: 1.w),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
@@ -120,7 +118,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
               text: 'Reset',
               backgroundColor: AppColors.whiteColor,
               width: 56.w,
-              height: 30.h,
+              height: MediaQuery.of(context).size.height < 700 ? 40.h : 45.h,
               border: BorderSide(color: AppColors.primaryColor, width: 1.w),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
