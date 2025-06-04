@@ -1,7 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:archive/archive_io.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:braille_app/ui/shared/basic_button.dart';
@@ -118,34 +123,49 @@ class _DocumentScreenState extends State<DocumentScreen> {
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(12),
-                    child: SingleChildScrollView(
-                      child: TextField(
-                        controller: plainTextController,
-                        style: AppTextStyle.mediumBlack,
-                        maxLines: null,
-                        decoration: const InputDecoration.collapsed(
-                          hintText: 'No text extracted.',
-                        ),
-                      ),
-                    ),
+                    child:
+                        plainTextController.text.isEmpty
+                            ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.insert_drive_file_rounded,
+                                  size: 40.sp,
+                                  color: Colors.grey.shade300,
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Upload or drop document to translate',
+                                  style: TextStyle(
+                                    color: Colors.grey.shade500,
+                                    fontSize: 14.sp,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  'Max File Size 10 Mb',
+                                  style: TextStyle(
+                                    color: Colors.grey.shade500,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            )
+                            : SingleChildScrollView(
+                              child: TextField(
+                                controller: plainTextController,
+                                style: AppTextStyle.mediumBlack,
+                                maxLines: null,
+                                decoration: const InputDecoration.collapsed(
+                                  hintText: 'No text extracted.',
+                                ),
+                              ),
+                            ),
                   ),
                 ),
               ),
               const SizedBox(height: 8),
-              Align(
-                alignment: Alignment.centerRight,
-                child: BasicButton(
-                  text: 'Copy',
-                  backgroundColor: AppColors.whiteColor,
-                  width: 56,
-                  height: 28,
-                  border: BorderSide(color: AppColors.primaryColor, width: 1),
-                  textStyle: AppTextStyle.smallGreenBold,
-                  onPress: () {
-                    copyToClipboard(plainTextController.text);
-                  },
-                ),
-              ),
               BasicButton(
                 text: 'Convert to Braille',
                 textStyle: TextStyle(
@@ -180,20 +200,58 @@ class _DocumentScreenState extends State<DocumentScreen> {
                 ),
               ),
               const SizedBox(height: 8),
-              Align(
-                alignment: Alignment.centerRight,
-                child: BasicButton(
-                  text: 'Copy',
-                  backgroundColor: AppColors.whiteColor,
-                  width: 56,
-                  height: 28,
-                  border: BorderSide(color: AppColors.primaryColor, width: 1),
-                  textStyle: AppTextStyle.smallGreenBold,
-                  onPress: () {
-                    copyToClipboard(brailleText);
-                  },
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  BasicButton(
+                    text: 'Copy',
+                    backgroundColor: AppColors.whiteColor,
+                    width: 56.w,
+                    height:
+                        MediaQuery.of(context).size.height < 700 ? 30.h : 24.h,
+                    border: BorderSide(
+                      color: AppColors.primaryColor,
+                      width: 1.w,
+                    ),
+                    textStyle: AppTextStyle.smallGreenBold,
+                    onPress: () {
+                      Clipboard.setData(ClipboardData(text: brailleText));
+                    },
+                  ),
+                  BasicButton(
+                    text: 'Save as doc',
+                    backgroundColor: AppColors.whiteColor,
+                    width: 56.w,
+                    height:
+                        MediaQuery.of(context).size.height < 700 ? 30.h : 24.h,
+                    border: BorderSide(
+                      color: AppColors.primaryColor,
+                      width: 1.w,
+                    ),
+                    textStyle: AppTextStyle.smallGreenBold,
+                    onPress: () {
+                      copyToClipboard(brailleText);
+                    },
+                  ),
+                  BasicButton(
+                    text: 'Reset',
+                    backgroundColor: AppColors.whiteColor,
+                    width: 56.w,
+                    height:
+                        MediaQuery.of(context).size.height < 700 ? 30.h : 24.h,
+                    border: BorderSide(
+                      color: AppColors.primaryColor,
+                      width: 1.w,
+                    ),
+                    textStyle: AppTextStyle.smallGreenBold,
+                    onPress: () {
+                      brailleText = '';
+                      plainTextController.clear();
+                    },
+                  ),
+                ],
               ),
+              30.verticalSpace,
             ],
           ),
         ),
@@ -201,3 +259,76 @@ class _DocumentScreenState extends State<DocumentScreen> {
     );
   }
 }
+
+Future<void> exportAsDocx(String brailleText) async {
+  final escapedText = _xmlEscape(brailleText);
+
+  /* ───────── document.xml (with fallback fonts) ───────── */
+  final documentXml = '''
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="SimBraille,Segoe UI Symbol,DejaVu Sans Mono"
+                    w:hAnsi="SimBraille,Segoe UI Symbol,DejaVu Sans Mono"
+                    w:cs="SimBraille,Segoe UI Symbol,DejaVu Sans Mono"/>
+        </w:rPr>
+        <w:t xml:space="preserve">$escapedText</w:t>
+      </w:r>
+    </w:p>
+  </w:body>
+</w:document>
+''';
+
+  /* ───────── other fixed parts ───────── */
+  const contentTypesXml = '''
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+  <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+  <Default Extension="xml" ContentType="application/xml"/>
+  <Override PartName="/word/document.xml"
+            ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
+</Types>
+''';
+
+  const relsXml = '''
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  <Relationship Id="rId1"
+                Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
+                Target="word/document.xml"/>
+</Relationships>
+''';
+
+  /* ───────── build archive with UTF-8 bytes ───────── */
+  final archive =
+      Archive()
+        ..addFile(_toFile('word/document.xml', documentXml))
+        ..addFile(_toFile('[Content_Types].xml', contentTypesXml))
+        ..addFile(_toFile('_rels/.rels', relsXml));
+
+  final bytes = ZipEncoder().encode(archive)!;
+
+  /* ───────── save & share ───────── */
+  final dir = await getTemporaryDirectory();
+  final file = File('${dir.path}/braille_output.docx');
+  await file.writeAsBytes(bytes, flush: true);
+
+  await Share.shareXFiles([XFile(file.path)], text: 'Braille output document');
+}
+
+/* helper: encode to UTF-8 and create ArchiveFile with correct length */
+ArchiveFile _toFile(String name, String xml) {
+  final utf8Bytes = utf8.encode(xml);
+  return ArchiveFile(name, utf8Bytes.length, Uint8List.fromList(utf8Bytes));
+}
+
+/* basic XML escaper */
+String _xmlEscape(String s) => s
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&apos;');
