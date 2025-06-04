@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:archive/archive_io.dart';
 import 'package:braille_app/ui/screen/home/converter.dart';
 import 'package:braille_app/ui/screen/home/widget/dashed_textform_field.dart';
@@ -60,10 +59,10 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
         ),
         10.verticalSpace,
         BasicButton(
-          height: MediaQuery.of(context).size.height < 700 ? 40.h : 45.h,
-          width: 20.w,
+          height: 35.h,
+          width: 160.w,
           text: 'Upload File',
-          textStyle: AppTextStyle.mediumWhite.copyWith(
+          textStyle: AppTextStyle.smallWhite.copyWith(
             fontWeight: FontWeight.bold,
           ),
           onPress: () {
@@ -72,7 +71,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
         ),
         10.verticalSpace,
         BasicButton(
-          text: 'Translate',
+          text: 'Convert to Braille',
           onPress: () {
             final input = plainTextController.text;
             final output = latinToBraille(input);
@@ -93,7 +92,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
               text: 'Copy',
               backgroundColor: AppColors.whiteColor,
               width: 56.w,
-              height: MediaQuery.of(context).size.height < 700 ? 40.h : 45.h,
+              height: MediaQuery.of(context).size.height < 700 ? 30.h : 24.h,
               border: BorderSide(color: AppColors.primaryColor, width: 1.w),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
@@ -106,7 +105,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
               text: 'Save as doc',
               backgroundColor: AppColors.whiteColor,
               width: 56.w,
-              height: MediaQuery.of(context).size.height < 700 ? 40.h : 45.h,
+              height: MediaQuery.of(context).size.height < 700 ? 30.h : 24.h,
               border: BorderSide(color: AppColors.primaryColor, width: 1.w),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
@@ -118,7 +117,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
               text: 'Reset',
               backgroundColor: AppColors.whiteColor,
               width: 56.w,
-              height: MediaQuery.of(context).size.height < 700 ? 40.h : 45.h,
+              height: MediaQuery.of(context).size.height < 700 ? 30.h : 24.h,
               border: BorderSide(color: AppColors.primaryColor, width: 1.w),
               textStyle: AppTextStyle.smallGreenBold,
               onPress: () {
@@ -128,6 +127,7 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
             ),
           ],
         ),
+        30.verticalSpace,
       ],
     );
   }
