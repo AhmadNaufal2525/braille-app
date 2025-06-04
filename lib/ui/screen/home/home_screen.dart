@@ -36,28 +36,39 @@ class _HomeScreenState extends State<HomeScreen> {
                   height:
                       MediaQuery.of(context).size.height < 700 ? 120.h : 130.h,
                 ),
-                SafeArea(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Hi Teman',
-                          style:
-                              MediaQuery.of(context).size.height < 700
-                                  ? AppTextStyle.mediumWhite
-                                  : AppTextStyle.largeWhite,
-                        ),
-                        Text(
-                          'Selamat Datang',
-                          style: AppTextStyle.xxlargeWhite.copyWith(
-                            fontWeight: FontWeight.bold,
+                Builder(
+                  builder: (context) {
+                    final hasNotch = MediaQuery.of(context).padding.top > 0;
+
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        top:
+                            hasNotch
+                                ? MediaQuery.of(context).padding.top
+                                : 24.h,
+                        left: 20,
+                        right: 20,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Hi Teman',
+                            style:
+                                MediaQuery.of(context).size.height < 700
+                                    ? AppTextStyle.mediumWhite
+                                    : AppTextStyle.largeWhite,
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
+                          Text(
+                            'Selamat Datang',
+                            style: AppTextStyle.xxlargeWhite.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
