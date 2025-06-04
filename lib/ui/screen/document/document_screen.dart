@@ -215,7 +215,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                     ),
                     textStyle: AppTextStyle.smallGreenBold,
                     onPress: () {
-                      Clipboard.setData(ClipboardData(text: brailleText));
+                      copyToClipboard(brailleText);
                     },
                   ),
                   BasicButton(
@@ -230,7 +230,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                     ),
                     textStyle: AppTextStyle.smallGreenBold,
                     onPress: () {
-                      copyToClipboard(brailleText);
+                      exportAsDocx(brailleText);
                     },
                   ),
                   BasicButton(
@@ -245,7 +245,9 @@ class _DocumentScreenState extends State<DocumentScreen> {
                     ),
                     textStyle: AppTextStyle.smallGreenBold,
                     onPress: () {
-                      brailleText = '';
+                      setState(() {
+                        brailleText = '';
+                      });
                       plainTextController.clear();
                     },
                   ),
