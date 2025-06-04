@@ -36,28 +36,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   height:
                       MediaQuery.of(context).size.height < 700 ? 120.h : 130.h,
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Hi Teman',
-                        style:
-                            MediaQuery.of(context).size.height < 700
-                                ? AppTextStyle.mediumWhite
-                                : AppTextStyle.largeWhite,
-                      ),
-                      Text(
-                        'Selamat Datang',
-                        style:
-                            MediaQuery.of(context).size.height < 700
-                                ? AppTextStyle.xxlargeWhite.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                )
-                                : AppTextStyle.xxxlargeWhiteBold,
-                      ),
-                    ],
+                SafeArea(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Hi Teman',
+                          style:
+                              MediaQuery.of(context).size.height < 700
+                                  ? AppTextStyle.mediumWhite
+                                  : AppTextStyle.largeWhite,
+                        ),
+                        Text(
+                          'Selamat Datang',
+                          style: AppTextStyle.xxlargeWhite.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
