@@ -8,4 +8,5 @@ class AppVectors {
   static const String onboardImg3 = '${basePath}onboard_3$format';
   static const String iconHome = '${basePath}home$format';
   static const String iconBraille = '${basePath}braille$format';
+  static const String wellcomeVector = '${basePath}wellcome_vector$format';
 }
