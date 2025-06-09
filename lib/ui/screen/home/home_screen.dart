@@ -34,41 +34,30 @@ class _HomeScreenState extends State<HomeScreen> {
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height:
-                      MediaQuery.of(context).size.height < 700 ? 120.h : 130.h,
+                      MediaQuery.of(context).size.height < 780 ? 145.h : 130.h,
                 ),
-                Builder(
-                  builder: (context) {
-                    final hasNotch = MediaQuery.of(context).padding.top > 0;
-
-                    return Padding(
-                      padding: EdgeInsets.only(
-                        top:
-                            hasNotch
-                                ? MediaQuery.of(context).padding.top
-                                : 24.h,
-                        left: 20,
-                        right: 20,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Hi Teman',
-                            style:
-                                MediaQuery.of(context).size.height < 700
-                                    ? AppTextStyle.mediumWhite
-                                    : AppTextStyle.largeWhite,
+                SafeArea(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 30, left: 20, right: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Hi Teman',
+                          style:
+                              MediaQuery.of(context).size.height < 700
+                                  ? AppTextStyle.mediumWhite
+                                  : AppTextStyle.largeWhite,
+                        ),
+                        Text(
+                          'Selamat Datang',
+                          style: AppTextStyle.xxlargeWhite.copyWith(
+                            fontWeight: FontWeight.bold,
                           ),
-                          Text(
-                            'Selamat Datang',
-                            style: AppTextStyle.xxlargeWhite.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
