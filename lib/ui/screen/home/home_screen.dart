@@ -37,10 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       MediaQuery.of(context).size.height < 700 ? 145.h : 130.h,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 30.h,
-                    horizontal: 20.w,
-                  ),
+                  padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

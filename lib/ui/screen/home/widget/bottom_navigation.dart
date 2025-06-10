@@ -1,4 +1,4 @@
-import 'package:braille_app/ui/screen/document/document_screen.dart';
+import 'package:braille_app/ui/screen/history/history_screen.dart';
 import 'package:braille_app/ui/screen/home/home_screen.dart';
 import 'package:braille_app/utils/config/assets/app_vector.dart';
 import 'package:braille_app/utils/config/theme/app_colors.dart';
@@ -18,7 +18,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int selectedIndex = 0;
   List<Widget> get screens => [
     HomeScreen(scannedTextFromScanner: scannedTextFromScanner),
-    const DocumentScreen(),
+    HistoryScreen(),
   ];
 
   void onItemTapped(int index) {
@@ -72,7 +72,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
                           child: SizedBox(
                             height: 30.h,
                             width: 30.w,
-                            child: SvgPicture.asset(AppVectors.iconHome),
+                            child: SvgPicture.asset(
+                              AppVectors.iconHome,
+                              colorFilter: ColorFilter.mode(
+                                selectedIndex == 0
+                                    ? AppColors.whiteColor
+                                    : AppColors.greyColor,
+                                BlendMode.srcIn,
+                              ),
+                            ),
                           ),
                         ),
                         20.horizontalSpace,
@@ -81,7 +89,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
                           child: SizedBox(
                             height: 30.h,
                             width: 30.w,
-                            child: SvgPicture.asset(AppVectors.iconBraille),
+                            child: SvgPicture.asset(
+                              AppVectors.iconBraille,
+                              colorFilter: ColorFilter.mode(
+                                selectedIndex == 1
+                                    ? AppColors.whiteColor
+                                    : AppColors.greyColor,
+                                BlendMode.srcIn,
+                              ),
+                            ),
                           ),
                         ),
                       ],
