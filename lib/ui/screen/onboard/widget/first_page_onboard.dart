@@ -24,7 +24,7 @@ class FirstPageOnboard extends StatelessWidget {
             ),
             Transform.translate(
               offset:
-                  MediaQuery.of(context).size.height < 800
+                  MediaQuery.of(context).size.height < 700
                       ? const Offset(0, -30)
                       : const Offset(0, -10),
               child: SvgPicture.asset(
@@ -32,7 +32,7 @@ class FirstPageOnboard extends StatelessWidget {
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height:
-                    MediaQuery.of(context).size.height < 800 ? 0.64.sh : 0.6.sh,
+                    MediaQuery.of(context).size.height < 700 ? 0.45.sh : 0.6.sh,
               ),
             ),
             SafeArea(
@@ -45,7 +45,10 @@ class FirstPageOnboard extends StatelessWidget {
                       child: SvgPicture.asset(
                         AppVectors.onboardImg1,
                         width: double.infinity,
-                        height: 0.28.sh,
+                        height:
+                            MediaQuery.of(context).size.height < 700
+                                ? 0.2.sh
+                                : 0.28.sh,
                       ),
                     ),
                     DotsIndicator(

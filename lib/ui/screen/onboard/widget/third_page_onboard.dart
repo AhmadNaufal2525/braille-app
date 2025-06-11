@@ -33,7 +33,7 @@ class ThirdPageOnboard extends StatelessWidget {
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height:
-                    MediaQuery.of(context).size.height < 800 ? 0.64.sh : 0.6.sh,
+                    MediaQuery.of(context).size.height < 700 ? 0.45.sh : 0.6.sh,
               ),
             ),
             SafeArea(
@@ -46,7 +46,10 @@ class ThirdPageOnboard extends StatelessWidget {
                       child: SvgPicture.asset(
                         AppVectors.onboardImg3,
                         width: double.infinity,
-                        height: 0.28.sh,
+                        height:
+                            MediaQuery.of(context).size.height < 700
+                                ? 0.2.sh
+                                : 0.28.sh,
                       ),
                     ),
                     DotsIndicator(
