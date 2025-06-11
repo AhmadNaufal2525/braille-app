@@ -24,7 +24,7 @@ dependencies:
   share_plus: ^7.2.1
   path_provider: ^2.1.1
   archive: ^3.4.10
-  
+
 dev_dependencies:
   flutter_lints: ^5.0.0
   flutter_test:

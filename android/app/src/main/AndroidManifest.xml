@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
     android:maxSdkVersion="28"/>
     <application
-        android:label="TemaNetra"
+        android:label="Tactin"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
