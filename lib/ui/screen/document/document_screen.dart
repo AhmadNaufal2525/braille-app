@@ -130,7 +130,6 @@ class _DocumentScreenState extends State<DocumentScreen> {
               ),
             ],
           ),
-
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -162,36 +161,58 @@ class _DocumentScreenState extends State<DocumentScreen> {
                         padding: const EdgeInsets.all(12),
                         child:
                             plainTextController.text.isEmpty
-                                ? Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      AppVectors.iconDoc,
-                                      width: 50.w,
-                                      height: 50.h,
-                                      colorFilter: ColorFilter.mode(
-                                        AppColors.hintDocumentColor,
-                                        BlendMode.srcIn,
-                                      ),
+                                ? Center(
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SvgPicture.asset(
+                                          AppVectors.iconDoc,
+                                          width: 50.w,
+                                          height:
+                                              MediaQuery.of(
+                                                        context,
+                                                      ).size.height <=
+                                                      640
+                                                  ? 30.h
+                                                  : 50.h,
+                                          colorFilter: ColorFilter.mode(
+                                            AppColors.hintDocumentColor,
+                                            BlendMode.srcIn,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          'Upload or drop document to translate',
+                                          style: TextStyle(
+                                            color: AppColors.hintDocumentColor,
+                                            fontSize:
+                                                MediaQuery.of(
+                                                          context,
+                                                        ).size.height <=
+                                                        640
+                                                    ? 8.sp
+                                                    : 10.sp,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          'Max File Size 10 Mb',
+                                          style: TextStyle(
+                                            color: AppColors.hintDocumentColor,
+                                            fontSize:
+                                                MediaQuery.of(
+                                                          context,
+                                                        ).size.height <=
+                                                        640
+                                                    ? 8.sp
+                                                    : 10.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      'Upload or drop document to translate',
-                                      style: TextStyle(
-                                        color: AppColors.hintDocumentColor,
-                                        fontSize: 10.sp,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'Max File Size 10 Mb',
-                                      style: TextStyle(
-                                        color: AppColors.hintDocumentColor,
-                                        fontSize: 10.sp,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 )
                                 : SingleChildScrollView(
                                   child: TextField(
@@ -206,6 +227,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                       ),
                     ),
                   ),
+
                   SizedBox(height: 12.h),
                   BasicButton(
                     text: 'Convert to Braille',
