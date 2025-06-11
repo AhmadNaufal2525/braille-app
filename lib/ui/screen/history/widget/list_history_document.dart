@@ -30,9 +30,7 @@ class ListHistoryDocument extends StatelessWidget {
           final doc = docList![index];
           return CardDocument(
             documentName: doc['documentName'],
-            onPressed: () {
-              Navigator.pushNamed(context, '/document');
-            },
+            onPressed: () {},
           );
         },
         separatorBuilder: (BuildContext context, int index) {
