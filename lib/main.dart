@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       builder: (_, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'TemaNetra',
+          title: 'Tactin',
           theme: AppTheme.theme,
           onGenerateRoute: AppRoute.onGenerateRoutes,
         );
