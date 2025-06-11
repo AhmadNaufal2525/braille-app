@@ -70,7 +70,10 @@ class _MathToBrailleState extends State<MathToBraille> {
                   _showMathKeyboard
                       ? 'Hide Math Keyboard'
                       : 'Show Math Keyboard',
-                  style: AppTextStyle.smallGreen,
+                  style:
+                      MediaQuery.of(context).size.height < 700
+                          ? AppTextStyle.xSmallGreen
+                          : AppTextStyle.smallGreen,
                 ),
               ),
             ),
