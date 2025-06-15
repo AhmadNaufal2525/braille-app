@@ -1,4 +1,5 @@
 import 'package:braille_app/ui/screen/document/document_screen.dart';
+import 'package:braille_app/ui/screen/history/history_screen.dart';
 import 'package:braille_app/ui/screen/home/home_screen.dart';
 import 'package:braille_app/ui/screen/onboard/onboard_screen.dart';
 import 'package:braille_app/ui/screen/scanner/text_scanner.dart';
@@ -16,16 +17,24 @@ class AppRoute {
       case '/home':
         final scannedTextFromScanner = settings.arguments as String;
         return _materialRoute(
-          HomeScreen(scannedTextFromScanner: scannedTextFromScanner, initalBrailleText: ''),
+          HomeScreen(
+            scannedTextFromScanner: scannedTextFromScanner,
+            initalBrailleText: '',
+          ),
         );
       case '/document':
         return _materialRoute(const DocumentScreen());
+      case '/history':
+        return _materialRoute(const HistoryScreen());
       case '/text-scanner':
         return _materialRoute(const TextScanner());
       default:
         final scannedTextFromScanner = settings.arguments as String;
         return _materialRoute(
-          HomeScreen(scannedTextFromScanner: scannedTextFromScanner, initalBrailleText: ''),
+          HomeScreen(
+            scannedTextFromScanner: scannedTextFromScanner,
+            initalBrailleText: '',
+          ),
         );
     }
   }
