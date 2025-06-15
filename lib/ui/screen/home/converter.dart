@@ -1,3 +1,5 @@
+import 'package:braille_app/utils/database/database_helper.dart';
+
 // Standard character-to-braille mapping
 const Map<String, String> _brailleMap = {
   // Letters
@@ -59,7 +61,7 @@ const Map<String, String> _brailleMultiCharMap = {
 const String _capitalIndicator = '⠠';
 const String _numberIndicator = '⠼';
 
-String latinToBraille(String text) {
+Future<String> latinToBraille(String text) async {
   final buffer = StringBuffer();
   bool numberMode = false;
 
@@ -96,5 +98,16 @@ String latinToBraille(String text) {
     }
   }
 
-  return buffer.toString();
+  final brailleText = buffer.toString();
+  
+  // Save to database
+  if (text.isNotEmpty && brailleText.isNotEmpty) {
+    final dbHelper = DatabaseHelper();
+    await dbHelper.insertTextBraille({
+      'text': text,
+      'text_braille': brailleText,
+    });
+  }
+
+  return brailleText;
 }

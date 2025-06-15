@@ -15,7 +15,12 @@ import 'package:share_plus/share_plus.dart';
 
 class TextPlainToBraille extends StatefulWidget {
   final String initialScannedText;
-  const TextPlainToBraille({super.key, required this.initialScannedText});
+  final String initialBrailleText;
+  const TextPlainToBraille({
+    super.key, 
+    required this.initialScannedText,
+    required this.initialBrailleText,
+  });
 
   @override
   State<TextPlainToBraille> createState() => _TextPlainToBrailleState();
@@ -23,13 +28,16 @@ class TextPlainToBraille extends StatefulWidget {
 
 class _TextPlainToBrailleState extends State<TextPlainToBraille> {
   late TextEditingController plainTextController;
-  final TextEditingController brailleTextController = TextEditingController();
+  late TextEditingController brailleTextController;
 
   @override
   void initState() {
     super.initState();
     plainTextController = TextEditingController(
       text: widget.initialScannedText,
+    );
+    brailleTextController = TextEditingController(
+      text: widget.initialBrailleText,
     );
   }
 
@@ -39,6 +47,9 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
     if (oldWidget.initialScannedText != widget.initialScannedText) {
       plainTextController.text = widget.initialScannedText;
     }
+    if (oldWidget.initialBrailleText != widget.initialBrailleText) {
+      brailleTextController.text = widget.initialBrailleText;
+    }
   }
 
   @override
@@ -46,6 +57,12 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
     plainTextController.dispose();
     brailleTextController.dispose();
     super.dispose();
+  }
+
+  void convertBraille(String plainText) async {
+    final input = plainText;
+    final output = await latinToBraille(input);
+    brailleTextController.text = output;
   }
 
   @override
@@ -72,9 +89,9 @@ class _TextPlainToBrailleState extends State<TextPlainToBraille> {
         10.verticalSpace,
         BasicButton(
           text: 'Convert to Braille',
-          onPress: () {
+          onPress: () async {
             final input = plainTextController.text;
-            final output = latinToBraille(input);
+            final output = await latinToBraille(input);
             brailleTextController.text = output;
           },
           height: 48.h,

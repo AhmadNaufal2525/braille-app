@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math' as math;
+import 'package:braille_app/ui/screen/home/converter.dart';
 import 'package:braille_app/ui/shared/basic_button.dart';
 import 'package:braille_app/utils/config/theme/app_text_style.dart';
 import 'package:flutter/material.dart';
@@ -142,14 +143,17 @@ class _TextScannerState extends State<TextScanner> with WidgetsBindingObserver {
       final recognizedText = await textRecognizer.processImage(inputImage);
 
       // Return scanned text to previous screen
-      navigator.pop(recognizedText.text);
+      final braille = await latinToBraille(recognizedText.text);
+      navigator.pop({'text': recognizedText.text, 'braille': braille});
+      print('recognized Text: ${recognizedText.text}');
+
     } catch (e, stackTrace) {
       print('Error scanning text: $e');
       print('Stack trace: $stackTrace');
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("An error occurred when scanning text: $e")),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text("An error occurred when scanning text: $e")),
+      // );
     }
   }
 

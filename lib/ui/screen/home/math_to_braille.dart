@@ -130,9 +130,9 @@ class _MathToBrailleState extends State<MathToBraille> {
         ],
         BasicButton(
           text: 'Convert to Braille',
-          onPress: () {
+          onPress: () async {
             final input = mathTextController.text;
-            final output = latinToBraille(input);
+            final output = await latinToBraille(input);
             brailleTextController.text = output;
           },
           height: 48.h,

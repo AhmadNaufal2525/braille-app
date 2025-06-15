@@ -80,9 +80,13 @@ class _DocumentScreenState extends State<DocumentScreen> {
         .trim();
   }
 
-  void convertToBraille() {
+  void convertToBraille() async {
     setState(() {
-      brailleText = latinToBraille(plainTextController.text);
+      brailleText = '';
+    });
+    final output = await latinToBraille(plainTextController.text);
+    setState(() {
+      brailleText = output;
     });
   }
 
