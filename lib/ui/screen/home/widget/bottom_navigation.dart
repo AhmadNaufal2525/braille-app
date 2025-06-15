@@ -1,4 +1,5 @@
 import 'package:braille_app/ui/screen/history/history_screen.dart';
+import 'package:braille_app/ui/screen/home/converter.dart';
 import 'package:braille_app/ui/screen/home/home_screen.dart';
 import 'package:braille_app/utils/config/assets/app_vector.dart';
 import 'package:braille_app/utils/config/theme/app_colors.dart';
@@ -15,16 +16,32 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation> {
   String scannedTextFromScanner = '';
+  String brailleText = '';
   int selectedIndex = 0;
   List<Widget> get screens => [
-    HomeScreen(scannedTextFromScanner: scannedTextFromScanner),
+    HomeScreen(scannedTextFromScanner: scannedTextFromScanner, initalBrailleText: brailleText),
     HistoryScreen(),
   ];
 
-  void onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
+  void onItemTapped(int index) async {
+    if (index == 1) {
+      final result = await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HistoryScreen()),
+      );
+      
+      if (result != null && result is Map<String, dynamic>) {
+        setState(() {
+          scannedTextFromScanner = result['text'];
+          brailleText = result['braille'];
+          selectedIndex = 0; // Switch back to home screen
+        });
+      }
+    } else {
+      setState(() {
+        selectedIndex = index;
+      });
+    }
   }
 
   @override
@@ -67,73 +84,43 @@ class _BottomNavigationState extends State<BottomNavigation> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        GestureDetector(
-                          onTap: () => onItemTapped(0),
-                          child: SizedBox(
-                            height: 30.h,
-                            width: 30.w,
-                            child: SvgPicture.asset(
-                              AppVectors.iconHome,
-                              colorFilter: ColorFilter.mode(
-                                selectedIndex == 0
-                                    ? AppColors.whiteColor
-                                    : AppColors.greyColor,
-                                BlendMode.srcIn,
+                        _buildNavItem(0, 'Home', AppVectors.iconHome),
+                        Positioned(
+                          top: -14,
+                          child: Container(
+                            width: 72.w,
+                            height: 67.h,
+                            decoration: BoxDecoration(
+                              color: AppColors.whiteColor,
+                              border: Border.all(
+                                color: AppColors.primaryColor,
+                                width: 4.w,
+                              ),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: IconButton(
+                              onPressed: () async {
+                                final result = await Navigator.pushNamed(
+                                  context,
+                                  '/text-scanner',
+                                );
+                                if (result != null && result is Map<String, dynamic>) {
+                                  setState(() {
+                                    scannedTextFromScanner = result['text'];
+                                    brailleText = result['braille'];
+                                  });
+                                }
+                              },
+                              icon: Icon(
+                                Icons.camera_alt_rounded,
+                                color: AppColors.primaryColor,
+                                size: 36.sp,
                               ),
                             ),
                           ),
                         ),
-                        20.horizontalSpace,
-                        GestureDetector(
-                          onTap: () => onItemTapped(1),
-                          child: SizedBox(
-                            height: 30.h,
-                            width: 30.w,
-                            child: SvgPicture.asset(
-                              AppVectors.iconBraille,
-                              colorFilter: ColorFilter.mode(
-                                selectedIndex == 1
-                                    ? AppColors.whiteColor
-                                    : AppColors.greyColor,
-                                BlendMode.srcIn,
-                              ),
-                            ),
-                          ),
-                        ),
+                        _buildNavItem(1, 'History', AppVectors.iconBraille),
                       ],
-                    ),
-                  ),
-                  Positioned(
-                    top: -14,
-                    child: Container(
-                      width: 72.w,
-                      height: 67.h,
-                      decoration: BoxDecoration(
-                        color: AppColors.whiteColor,
-                        border: Border.all(
-                          color: AppColors.primaryColor,
-                          width: 4.w,
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: IconButton(
-                        onPressed: () async {
-                          final result = await Navigator.pushNamed(
-                            context,
-                            '/text-scanner',
-                          );
-                          if (result != null && result is String) {
-                            setState(() {
-                              scannedTextFromScanner = result;
-                            });
-                          }
-                        },
-                        icon: Icon(
-                          Icons.camera_alt_rounded,
-                          color: AppColors.primaryColor,
-                          size: 36.sp,
-                        ),
-                      ),
                     ),
                   ),
                 ],
@@ -141,6 +128,37 @@ class _BottomNavigationState extends State<BottomNavigation> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildNavItem(int index, String label, String icon) {
+    final isSelected = selectedIndex == index;
+    return Expanded(
+      child: InkWell(
+        onTap: () => onItemTapped(index),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              icon,
+              width: 24.w,
+              height: 24.h,
+              colorFilter: ColorFilter.mode(
+                isSelected ? Colors.white : Colors.white.withOpacity(0.5),
+                BlendMode.srcIn,
+              ),
+            ),
+            SizedBox(height: 4.h),
+            Text(
+              label,
+              style: TextStyle(
+                color: isSelected ? Colors.white : Colors.white.withOpacity(0.5),
+                fontSize: 12.sp,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

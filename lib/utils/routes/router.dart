@@ -16,7 +16,7 @@ class AppRoute {
       case '/home':
         final scannedTextFromScanner = settings.arguments as String;
         return _materialRoute(
-          HomeScreen(scannedTextFromScanner: scannedTextFromScanner),
+          HomeScreen(scannedTextFromScanner: scannedTextFromScanner, initalBrailleText: ''),
         );
       case '/document':
         return _materialRoute(const DocumentScreen());
@@ -25,7 +25,7 @@ class AppRoute {
       default:
         final scannedTextFromScanner = settings.arguments as String;
         return _materialRoute(
-          HomeScreen(scannedTextFromScanner: scannedTextFromScanner),
+          HomeScreen(scannedTextFromScanner: scannedTextFromScanner, initalBrailleText: ''),
         );
     }
   }

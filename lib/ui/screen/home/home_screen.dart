@@ -10,7 +10,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatefulWidget {
   final String scannedTextFromScanner;
-  const HomeScreen({super.key, required this.scannedTextFromScanner});
+  final String initalBrailleText;
+  const HomeScreen({super.key, required this.scannedTextFromScanner, required this.initalBrailleText});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -142,6 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   isPlainToBraille
                       ? TextPlainToBraille(
                         initialScannedText: widget.scannedTextFromScanner,
+                        initialBrailleText: widget.initalBrailleText,
                       )
                       : const MathToBraille(),
                 ],
