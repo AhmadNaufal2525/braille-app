@@ -1,5 +1,5 @@
-import 'package:braille_app/utils/database/database_helper.dart';
 import 'package:braille_app/utils/config/theme/app_colors.dart';
+import 'package:braille_app/utils/database/database_helper.dart';
 import 'package:braille_app/utils/config/theme/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,7 +44,7 @@ class _ListHistoryDocumentState extends State<ListHistoryDocument> {
       final items = await _dbHelper.getAllTextBraille();
       final startIndex = _currentPage * _pageSize;
       final endIndex = startIndex + _pageSize;
-      
+
       if (startIndex >= items.length) {
         setState(() {
           _hasMore = false;
@@ -96,9 +96,7 @@ class _ListHistoryDocumentState extends State<ListHistoryDocument> {
   @override
   Widget build(BuildContext context) {
     if (_historyItems.isEmpty && !_isLoading) {
-      return const Center(
-        child: Text('No history items found'),
-      );
+      return const Center(child: Text('No history items found'));
     }
 
     return Expanded(
@@ -109,11 +107,11 @@ class _ListHistoryDocumentState extends State<ListHistoryDocument> {
           if (index == _historyItems.length) {
             return _isLoading
                 ? const Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(),
+                  ),
+                )
                 : const SizedBox.shrink();
           }
 
@@ -124,10 +122,7 @@ class _ListHistoryDocumentState extends State<ListHistoryDocument> {
               color: Colors.red,
               alignment: Alignment.centerRight,
               padding: const EdgeInsets.only(right: 20),
-              child: const Icon(
-                Icons.delete,
-                color: Colors.white,
-              ),
+              child: const Icon(Icons.delete, color: Colors.white),
             ),
             direction: DismissDirection.endToStart,
             onDismissed: (direction) {
@@ -136,11 +131,11 @@ class _ListHistoryDocumentState extends State<ListHistoryDocument> {
             child: InkWell(
               onTap: () => _onItemTap(item),
               child: Card(
-                
+                color: AppColors.bgColor,
                 margin: EdgeInsets.symmetric(vertical: 8.h),
                 child: Padding(
                   padding: EdgeInsets.all(16.r),
-                  child: Container(
+                  child: SizedBox(
                     width: double.infinity,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
