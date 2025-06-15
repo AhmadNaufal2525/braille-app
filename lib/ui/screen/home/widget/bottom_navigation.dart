@@ -146,7 +146,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               width: 24.w,
               height: 24.h,
               colorFilter: ColorFilter.mode(
-                isSelected ? Colors.white : Colors.white.withOpacity(0.5),
+                isSelected ? AppColors.whiteColor : AppColors.greyColor,
                 BlendMode.srcIn,
               ),
             ),
@@ -154,8 +154,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             Text(
               label,
               style: TextStyle(
-                color:
-                    isSelected ? Colors.white : Colors.white.withOpacity(0.5),
+                color: isSelected ? AppColors.whiteColor : AppColors.greyColor,
                 fontSize: 12.sp,
               ),
             ),
