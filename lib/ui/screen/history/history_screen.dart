@@ -5,8 +5,7 @@ import 'package:braille_app/utils/config/theme/app_text_style.dart';
 import 'package:flutter/material.dart';
 
 class HistoryScreen extends StatefulWidget {
-  final void Function(Map<String, dynamic>)? onResult;
-  const HistoryScreen({super.key, this.onResult});
+  const HistoryScreen({super.key});
 
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
