@@ -1,5 +1,4 @@
 import 'package:braille_app/ui/screen/history/history_screen.dart';
-import 'package:braille_app/ui/screen/home/converter.dart';
 import 'package:braille_app/ui/screen/home/home_screen.dart';
 import 'package:braille_app/utils/config/assets/app_vector.dart';
 import 'package:braille_app/utils/config/theme/app_colors.dart';
@@ -19,17 +18,17 @@ class _BottomNavigationState extends State<BottomNavigation> {
   String brailleText = '';
   int selectedIndex = 0;
   List<Widget> get screens => [
-    HomeScreen(scannedTextFromScanner: scannedTextFromScanner, initalBrailleText: brailleText),
+    HomeScreen(
+      scannedTextFromScanner: scannedTextFromScanner,
+      initalBrailleText: brailleText,
+    ),
     HistoryScreen(),
   ];
 
   void onItemTapped(int index) async {
     if (index == 1) {
-      final result = await Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const HistoryScreen()),
-      );
-      
+      final result = await Navigator.pushNamed(context, '/history');
+
       if (result != null && result is Map<String, dynamic>) {
         setState(() {
           scannedTextFromScanner = result['text'];
@@ -85,42 +84,44 @@ class _BottomNavigationState extends State<BottomNavigation> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         _buildNavItem(0, 'Home', AppVectors.iconHome),
-                        Positioned(
-                          top: -14,
-                          child: Container(
-                            width: 72.w,
-                            height: 67.h,
-                            decoration: BoxDecoration(
-                              color: AppColors.whiteColor,
-                              border: Border.all(
-                                color: AppColors.primaryColor,
-                                width: 4.w,
-                              ),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: IconButton(
-                              onPressed: () async {
-                                final result = await Navigator.pushNamed(
-                                  context,
-                                  '/text-scanner',
-                                );
-                                if (result != null && result is Map<String, dynamic>) {
-                                  setState(() {
-                                    scannedTextFromScanner = result['text'];
-                                    brailleText = result['braille'];
-                                  });
-                                }
-                              },
-                              icon: Icon(
-                                Icons.camera_alt_rounded,
-                                color: AppColors.primaryColor,
-                                size: 36.sp,
-                              ),
-                            ),
-                          ),
-                        ),
+                        SizedBox(width: 72.w),
                         _buildNavItem(1, 'History', AppVectors.iconBraille),
                       ],
+                    ),
+                  ),
+                  Positioned(
+                    top: -14,
+                    child: Container(
+                      width: 72.w,
+                      height: 67.h,
+                      decoration: BoxDecoration(
+                        color: AppColors.whiteColor,
+                        border: Border.all(
+                          color: AppColors.primaryColor,
+                          width: 4.w,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: IconButton(
+                        onPressed: () async {
+                          final result = await Navigator.pushNamed(
+                            context,
+                            '/text-scanner',
+                          );
+                          if (result != null &&
+                              result is Map<String, dynamic>) {
+                            setState(() {
+                              scannedTextFromScanner = result['text'];
+                              brailleText = result['braille'];
+                            });
+                          }
+                        },
+                        icon: Icon(
+                          Icons.camera_alt_rounded,
+                          color: AppColors.primaryColor,
+                          size: 36.sp,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -153,7 +154,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
             Text(
               label,
               style: TextStyle(
-                color: isSelected ? Colors.white : Colors.white.withOpacity(0.5),
+                color:
+                    isSelected ? Colors.white : Colors.white.withOpacity(0.5),
                 fontSize: 12.sp,
               ),
             ),
